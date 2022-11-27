@@ -3,6 +3,8 @@ package com.dynonuggets.refonteimplicaction.model.forum;
 import com.dynonuggets.refonteimplicaction.model.User;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -29,9 +31,11 @@ public class Topic {
     private String message;
 
     @Column(name = "created_at", nullable = false)
+    @CreationTimestamp
     private Instant createdAt;
 
     @Column(name = "edited_at", nullable = false)
+    @UpdateTimestamp
     private Instant editedAt;
 
     @Column(name = "is_locked", nullable = false)
@@ -50,20 +54,4 @@ public class Topic {
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
-
-    @PrePersist
-    void createdAt() {
-        Instant now = Instant.now();
-        createdAt = now;
-        setUpdatedAt(now);
-    }
-
-    @PreUpdate
-    void updatedAt() {
-        setUpdatedAt(Instant.now());
-    }
-
-    private void setUpdatedAt(Instant now) {
-        editedAt = now;
-    }
 }
