@@ -49,6 +49,9 @@ public class Message {
     public static final String USER_REGISTER_MAIL_BODY = "L'utilisateur %s vient de s'inscrire et est en attente de validation";
     public static final String USER_REGISTER_MAIL_TITLE = "[Implicaction] Un utilisateur est en attente de validation";
 
+    // Forum messages
+    public static final String CATEGORY_NOT_FOUND_MESSAGE = "No category with id [%s]";
+
 
     private Message() {
         // Empeche la création d'une instance de la classe Message
