@@ -57,16 +57,29 @@ public class ForumController {
         return ResponseEntity.ok(topicDtos);
     }
 
-    @GetMapping("/responses/{categortyId}") // NEED TO VALIDATE
+    @GetMapping("/responses/{topicId}") // NEED TO VALIDATE
     public ResponseEntity<Page<ResponseDTO>> getResponsesFromCategory(
-            @PathVariable long categoryId,
+            @PathVariable long topicId,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "rows", defaultValue = "10") int rows,
             @RequestParam(value = "sortBy", defaultValue = "id") String sortBy,
             @RequestParam(value = "sortOrder", defaultValue = "ASC") String sortOrder
     ) {
         Pageable pageable = PageRequest.of(page, rows, Sort.by(Sort.Direction.valueOf(sortOrder), sortBy));
-        Page<ResponseDTO> responseDtos = responseService.getResponsesFromTopic(categoryId, pageable);
+        Page<ResponseDTO> responseDtos = responseService.getResponsesFromTopic(topicId, pageable);
         return ResponseEntity.ok(responseDtos);
     }
+
+    @PostMapping("/topics")
+    public ResponseEntity<TopicDTO> createTopic(@RequestBody TopicDTO topicDTO) {
+        TopicDTO saveDTO = topicService.createTopic(topicDTO);
+        return ResponseEntity.status(CREATED).body(saveDTO);
+    }
+
+    @PostMapping("/responses")
+    public ResponseEntity<ResponseDTO> createResponse(@RequestBody ResponseDTO responseDTO) {
+        ResponseDTO saveDTO = responseService.createResponse(responseDTO);
+        return ResponseEntity.status(CREATED).body(saveDTO);
+    }
+
 }
