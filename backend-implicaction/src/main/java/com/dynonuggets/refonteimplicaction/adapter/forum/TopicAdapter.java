@@ -7,7 +7,6 @@ import com.dynonuggets.refonteimplicaction.model.forum.Topic;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-
 @AllArgsConstructor
 @Component
 public class TopicAdapter {
