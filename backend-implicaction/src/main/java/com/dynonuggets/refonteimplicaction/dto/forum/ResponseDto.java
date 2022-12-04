@@ -13,8 +13,8 @@ import java.time.Instant;
 public class ResponseDto {
     private long id;
     private String message;
-    private Instant created_at;
-    private Instant edited_at;
+    private Instant createdAt;
+    private Instant editedAt;
     private UserDto author;
     private TopicDto topic;
 }

@@ -18,10 +18,10 @@ public class TopicAdapter {
                 .id(dto.getId())
                 .title(dto.getTitle())
                 .message(dto.getMessage())
-                .createdAt(dto.getCreated_at())
-                .editedAt(dto.getEdited_at())
-                .isLocked(dto.is_locked())
-                .isPinned(dto.is_pinned())
+                .createdAt(dto.getCreatedAt())
+                .editedAt(dto.getEditedAt())
+                .isLocked(dto.isLocked())
+                .isPinned(dto.isPinned())
                 .author(user)
                 .build();
     }
@@ -31,10 +31,10 @@ public class TopicAdapter {
                 .id(model.getId())
                 .title(model.getTitle())
                 .message(model.getMessage())
-                .created_at(model.getCreatedAt())
-                .edited_at(model.getEditedAt())
-                .is_pinned(model.isPinned())
-                .is_locked(model.isLocked())
+                .createdAt(model.getCreatedAt())
+                .editedAt(model.getEditedAt())
+                .isPinned(model.isPinned())
+                .isLocked(model.isLocked())
                 .author(userAdapter.toDto(model.getAuthor()))
                 .build();
     }

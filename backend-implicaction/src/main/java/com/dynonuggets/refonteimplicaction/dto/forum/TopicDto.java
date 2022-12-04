@@ -15,10 +15,10 @@ public class TopicDto {
     private long id;
     private String title;
     private String message;
-    private Instant created_at;
-    private Instant edited_at;
-    private boolean is_locked;
-    private boolean is_pinned;
+    private Instant createdAt;
+    private Instant editedAt;
+    private boolean isLocked;
+    private boolean isPinned;
     private UserDto author;
     private List<ResponseDto> responses;
     private CategoryDto category;

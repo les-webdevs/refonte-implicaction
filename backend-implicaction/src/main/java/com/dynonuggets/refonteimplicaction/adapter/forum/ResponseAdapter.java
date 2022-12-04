@@ -17,8 +17,8 @@ public class ResponseAdapter {
         return Response.builder()
                 .id(dto.getId())
                 .message(dto.getMessage())
-                .createdAt(dto.getCreated_at())
-                .editedAt(dto.getEdited_at())
+                .createdAt(dto.getCreatedAt())
+                .editedAt(dto.getEditedAt())
                 .author(user)
                 .build();
     }
@@ -28,8 +28,8 @@ public class ResponseAdapter {
         return ResponseDto.builder()
                 .id(model.getId())
                 .message(model.getMessage())
-                .created_at(model.getCreatedAt())
-                .edited_at(model.getEditedAt())
+                .createdAt(model.getCreatedAt())
+                .editedAt(model.getEditedAt())
                 .author(userAdapter.toDto(model.getAuthor()))
                 .build();
     }
