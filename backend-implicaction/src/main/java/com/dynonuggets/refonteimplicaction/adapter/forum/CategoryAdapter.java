@@ -1,6 +1,6 @@
 package com.dynonuggets.refonteimplicaction.adapter.forum;
 
-import com.dynonuggets.refonteimplicaction.dto.forum.CategoryDTO;
+import com.dynonuggets.refonteimplicaction.dto.forum.CategoryDto;
 import com.dynonuggets.refonteimplicaction.model.forum.Category;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class CategoryAdapter {
-    public Category toModel(CategoryDTO dto) {
+    public Category toModel(CategoryDto dto) {
         return Category.builder()
                 .id(dto.getId())
                 .title(dto.getTitle())
@@ -18,8 +18,8 @@ public class CategoryAdapter {
                 .build();
     }
 
-    public CategoryDTO toDto(Category model) {
-        CategoryDTO.CategoryDTOBuilder builder = CategoryDTO.builder()
+    public CategoryDto toDto(Category model) {
+        CategoryDto.CategoryDtoBuilder builder = CategoryDto.builder()
                 .id(model.getId())
                 .title(model.getTitle())
                 .description(model.getDescription())
@@ -30,8 +30,8 @@ public class CategoryAdapter {
         return builder.build();
     }
 
-    public CategoryDTO toDtoWithChildren(Category model) {
-        CategoryDTO.CategoryDTOBuilder builder = CategoryDTO.builder()
+    public CategoryDto toDtoWithChildren(Category model) {
+        CategoryDto.CategoryDtoBuilder builder = CategoryDto.builder()
                 .id(model.getId())
                 .title(model.getTitle())
                 .description(model.getDescription())
@@ -40,7 +40,9 @@ public class CategoryAdapter {
             builder.parentId(model.getParent().getId());
         }
         if (model.getChildren().size() > 0) {
-            List<CategoryDTO> children = model.getChildren().stream().map(this::toDtoWithChildren).collect(Collectors.toList());
+            List<CategoryDto> children = model.getChildren().stream()
+                    .map(this::toDtoWithChildren)
+                    .collect(Collectors.toList());
             builder.children(children);
         }
         return builder.build();

@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Getter
-public class TopicDTO {
+public class TopicDto {
     private long id;
     private String title;
     private String message;
@@ -20,6 +20,6 @@ public class TopicDTO {
     private boolean is_locked;
     private boolean is_pinned;
     private UserDto author;
-    private List<ResponseDTO> responses;
-    private CategoryDTO category;
+    private List<ResponseDto> responses;
+    private CategoryDto category;
 }

@@ -1,7 +1,7 @@
 package com.dynonuggets.refonteimplicaction.service.forum;
 
 import com.dynonuggets.refonteimplicaction.adapter.forum.CategoryAdapter;
-import com.dynonuggets.refonteimplicaction.dto.forum.CategoryDTO;
+import com.dynonuggets.refonteimplicaction.dto.forum.CategoryDto;
 import com.dynonuggets.refonteimplicaction.exception.ImplicactionException;
 import com.dynonuggets.refonteimplicaction.exception.NotFoundException;
 import com.dynonuggets.refonteimplicaction.model.forum.Category;
@@ -28,24 +28,24 @@ public class CategoryService {
     private final CategoryAdapter categoryAdapter;
 
     @Transactional
-    public List<CategoryDTO> getCategories() {
-        Map<Long, CategoryDTO> categoryMap = new HashMap<>();
+    public List<CategoryDto> getCategories() {
+        Map<Long, CategoryDto> categoryMap = new HashMap<>();
         return categoryRepository.findAll().stream()
                 .map(categoryAdapter::toDto)
-                .peek(categoryDTO -> categoryMap.put(categoryDTO.getId(), categoryDTO))
-                .peek(categoryDTO -> {
-                    CategoryDTO parentCategory = categoryMap.get(categoryDTO.getParentId());
+                .peek(categoryDto -> categoryMap.put(categoryDto.getId(), categoryDto))
+                .peek(categoryDto -> {
+                    CategoryDto parentCategory = categoryMap.get(categoryDto.getParentId());
                     if (parentCategory == null) {
                         return;
                     }
-                    parentCategory.getChildren().add(categoryDTO);
+                    parentCategory.getChildren().add(categoryDto);
                 })
-                .filter(categoryDTO -> categoryDTO.getParentId() == null)
+                .filter(categoryDto -> categoryDto.getParentId() == null)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public CategoryDTO getCategory(long id) {
+    public CategoryDto getCategory(long id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format(CATEGORY_NOT_FOUND_MESSAGE, id)));
 
@@ -53,11 +53,11 @@ public class CategoryService {
     }
 
     @Transactional
-    public CategoryDTO createCategory(CategoryDTO categoryDTO) throws ImplicactionException {
-        Category createdCategory = categoryAdapter.toModel(categoryDTO);
-        if (categoryDTO.getParentId() != null) {
-            Category parentCategory = categoryRepository.findById(categoryDTO.getParentId())
-                    .orElseThrow(() -> new NotFoundException(String.format(CATEGORY_NOT_FOUND_MESSAGE, categoryDTO.getParentId())));
+    public CategoryDto createCategory(CategoryDto categoryDto) throws ImplicactionException {
+        Category createdCategory = categoryAdapter.toModel(categoryDto);
+        if (categoryDto.getParentId() != null) {
+            Category parentCategory = categoryRepository.findById(categoryDto.getParentId())
+                    .orElseThrow(() -> new NotFoundException(String.format(CATEGORY_NOT_FOUND_MESSAGE, categoryDto.getParentId())));
             createdCategory.setParent(parentCategory);
         }
 

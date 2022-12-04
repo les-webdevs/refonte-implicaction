@@ -1,8 +1,8 @@
 package com.dynonuggets.refonteimplicaction.controller.forum;
 
-import com.dynonuggets.refonteimplicaction.dto.forum.CategoryDTO;
-import com.dynonuggets.refonteimplicaction.dto.forum.ResponseDTO;
-import com.dynonuggets.refonteimplicaction.dto.forum.TopicDTO;
+import com.dynonuggets.refonteimplicaction.dto.forum.CategoryDto;
+import com.dynonuggets.refonteimplicaction.dto.forum.ResponseDto;
+import com.dynonuggets.refonteimplicaction.dto.forum.TopicDto;
 import com.dynonuggets.refonteimplicaction.exception.ImplicactionException;
 import com.dynonuggets.refonteimplicaction.service.forum.CategoryService;
 import com.dynonuggets.refonteimplicaction.service.forum.ResponseService;
@@ -28,24 +28,24 @@ public class ForumController {
     private final ResponseService responseService;
 
     @GetMapping("/categories")
-    public ResponseEntity<List<CategoryDTO>> getAllCategories() throws ImplicactionException {
+    public ResponseEntity<List<CategoryDto>> getAllCategories() throws ImplicactionException {
         return ResponseEntity.ok(forumService.getCategories());
     }
 
     @PostMapping("/categories")
-    public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO) {
-        CategoryDTO saveDTO = forumService.createCategory(categoryDTO);
-        return ResponseEntity.status(CREATED).body(saveDTO);
+    public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryDto categoryDto) {
+        CategoryDto saveDto = forumService.createCategory(categoryDto);
+        return ResponseEntity.status(CREATED).body(saveDto);
     }
 
     @GetMapping("/categories/{categoryId}")
-    public ResponseEntity<CategoryDTO> getCategory(@PathVariable long categoryId) {
-        CategoryDTO foundDTO = forumService.getCategory(categoryId);
-        return ResponseEntity.ok(foundDTO);
+    public ResponseEntity<CategoryDto> getCategory(@PathVariable long categoryId) {
+        CategoryDto foundDto = forumService.getCategory(categoryId);
+        return ResponseEntity.ok(foundDto);
     }
 
     @GetMapping("/topics/{categoryId}") // NEED TO VALIDATE
-    public ResponseEntity<Page<TopicDTO>> getTopicsFromCategory(
+    public ResponseEntity<Page<TopicDto>> getTopicsFromCategory(
             @PathVariable long categoryId,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "rows", defaultValue = "10") int rows,
@@ -53,12 +53,12 @@ public class ForumController {
             @RequestParam(value = "sortOrder", defaultValue = "ASC") String sortOrder
     ) {
         Pageable pageable = PageRequest.of(page, rows, Sort.by(Sort.Direction.valueOf(sortOrder), sortBy));
-        Page<TopicDTO> topicDtos = topicService.getTopicsFromCategory(categoryId, pageable);
+        Page<TopicDto> topicDtos = topicService.getTopicsFromCategory(categoryId, pageable);
         return ResponseEntity.ok(topicDtos);
     }
 
     @GetMapping("/responses/{topicId}") // NEED TO VALIDATE
-    public ResponseEntity<Page<ResponseDTO>> getResponsesFromCategory(
+    public ResponseEntity<Page<ResponseDto>> getResponsesFromCategory(
             @PathVariable long topicId,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "rows", defaultValue = "10") int rows,
@@ -66,20 +66,20 @@ public class ForumController {
             @RequestParam(value = "sortOrder", defaultValue = "ASC") String sortOrder
     ) {
         Pageable pageable = PageRequest.of(page, rows, Sort.by(Sort.Direction.valueOf(sortOrder), sortBy));
-        Page<ResponseDTO> responseDtos = responseService.getResponsesFromTopic(topicId, pageable);
+        Page<ResponseDto> responseDtos = responseService.getResponsesFromTopic(topicId, pageable);
         return ResponseEntity.ok(responseDtos);
     }
 
     @PostMapping("/topics")
-    public ResponseEntity<TopicDTO> createTopic(@RequestBody TopicDTO topicDTO) {
-        TopicDTO saveDTO = topicService.createTopic(topicDTO);
-        return ResponseEntity.status(CREATED).body(saveDTO);
+    public ResponseEntity<TopicDto> createTopic(@RequestBody TopicDto topicDto) {
+        TopicDto saveDto = topicService.createTopic(topicDto);
+        return ResponseEntity.status(CREATED).body(saveDto);
     }
 
     @PostMapping("/responses")
-    public ResponseEntity<ResponseDTO> createResponse(@RequestBody ResponseDTO responseDTO) {
-        ResponseDTO saveDTO = responseService.createResponse(responseDTO);
-        return ResponseEntity.status(CREATED).body(saveDTO);
+    public ResponseEntity<ResponseDto> createResponse(@RequestBody ResponseDto responseDto) {
+        ResponseDto saveDto = responseService.createResponse(responseDto);
+        return ResponseEntity.status(CREATED).body(saveDto);
     }
 
 }

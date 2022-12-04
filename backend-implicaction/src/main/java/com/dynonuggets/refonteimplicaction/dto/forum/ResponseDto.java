@@ -10,11 +10,11 @@ import java.time.Instant;
 @NoArgsConstructor
 @Builder
 @Getter
-public class ResponseDTO {
+public class ResponseDto {
     private long id;
     private String message;
     private Instant created_at;
     private Instant edited_at;
     private UserDto author;
-    private TopicDTO topic;
+    private TopicDto topic;
 }

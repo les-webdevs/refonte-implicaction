@@ -10,10 +10,10 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Getter
-public class CategoryDTO {
+public class CategoryDto {
     private Long id;
     private String title;
     private String description;
     private Long parentId;
-    private List<CategoryDTO> children = new ArrayList<>();
+    private List<CategoryDto> children = new ArrayList<>();
 }

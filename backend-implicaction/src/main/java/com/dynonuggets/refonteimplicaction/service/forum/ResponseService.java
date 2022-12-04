@@ -1,7 +1,7 @@
 package com.dynonuggets.refonteimplicaction.service.forum;
 
 import com.dynonuggets.refonteimplicaction.adapter.forum.ResponseAdapter;
-import com.dynonuggets.refonteimplicaction.dto.forum.ResponseDTO;
+import com.dynonuggets.refonteimplicaction.dto.forum.ResponseDto;
 import com.dynonuggets.refonteimplicaction.model.forum.Response;
 import com.dynonuggets.refonteimplicaction.model.forum.Topic;
 import com.dynonuggets.refonteimplicaction.repository.forum.ResponseRepository;
@@ -20,13 +20,13 @@ public class ResponseService {
     ResponseAdapter responseAdapter;
     AuthService authService;
 
-    public Page<ResponseDTO> getResponsesFromTopic(long topicId, Pageable pageable) {
+    public Page<ResponseDto> getResponsesFromTopic(long topicId, Pageable pageable) {
         Topic topic = topicRepository.getById(topicId);
         return responseRepository.findAllByTopic(topic, pageable).map(responseAdapter::toDto);
     }
 
-    public ResponseDTO createResponse(ResponseDTO responseDTO) {
-        Response response = responseAdapter.toModel(responseDTO, authService.getCurrentUser());
+    public ResponseDto createResponse(ResponseDto responseDto) {
+        Response response = responseAdapter.toModel(responseDto, authService.getCurrentUser());
         Response save = responseRepository.save(response);
         return responseAdapter.toDto(save);
     }

@@ -1,7 +1,7 @@
 package com.dynonuggets.refonteimplicaction.adapter.forum;
 
 import com.dynonuggets.refonteimplicaction.adapter.UserAdapter;
-import com.dynonuggets.refonteimplicaction.dto.forum.ResponseDTO;
+import com.dynonuggets.refonteimplicaction.dto.forum.ResponseDto;
 import com.dynonuggets.refonteimplicaction.model.User;
 import com.dynonuggets.refonteimplicaction.model.forum.Response;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ public class ResponseAdapter {
 
     private final UserAdapter userAdapter;
 
-    public Response toModel(ResponseDTO dto, User user) {
+    public Response toModel(ResponseDto dto, User user) {
         return Response.builder()
                 .id(dto.getId())
                 .message(dto.getMessage())
@@ -23,9 +23,9 @@ public class ResponseAdapter {
                 .build();
     }
 
-    public ResponseDTO toDto(Response model) {
+    public ResponseDto toDto(Response model) {
 
-        return ResponseDTO.builder()
+        return ResponseDto.builder()
                 .id(model.getId())
                 .message(model.getMessage())
                 .created_at(model.getCreatedAt())
