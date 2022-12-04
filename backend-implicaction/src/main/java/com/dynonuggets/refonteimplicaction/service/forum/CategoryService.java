@@ -31,15 +31,22 @@ public class CategoryService {
     public List<CategoryDto> getCategories() {
         Map<Long, CategoryDto> categoryMap = new HashMap<>();
         return categoryRepository.findAll().stream()
+                // transforme tous les modeles en DTO
                 .map(categoryAdapter::toDto)
+                // ajoute chaque categorie dans une map
                 .peek(categoryDto -> categoryMap.put(categoryDto.getId(), categoryDto))
+                // ajoute chaque catégorie à son parent (si elles en ont un)
                 .peek(categoryDto -> {
+                    // on récupère le parent de la catégorie
                     CategoryDto parentCategory = categoryMap.get(categoryDto.getParentId());
                     if (parentCategory == null) {
                         return;
                     }
+                    // on ajoute la catégorie actuelle dans la liste des enfants du parent
                     parentCategory.getChildren().add(categoryDto);
                 })
+                // finalement, on ne garde dans le tableau QUE les catégories qui n'ont pas de parent (la racine)
+                // puisque maintenant toutes les catégories ont leurs enfants
                 .filter(categoryDto -> categoryDto.getParentId() == null)
                 .collect(Collectors.toList());
     }
