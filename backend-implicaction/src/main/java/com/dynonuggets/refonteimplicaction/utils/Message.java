@@ -51,6 +51,7 @@ public class Message {
 
     // Forum messages
     public static final String CATEGORY_NOT_FOUND_MESSAGE = "No category with id [%s]";
+    public static final String TOPIC_NOT_FOUND_MESSAGE = "No topic with id [%s]";
 
 
     private Message() {

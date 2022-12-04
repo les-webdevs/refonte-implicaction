@@ -2,6 +2,7 @@ package com.dynonuggets.refonteimplicaction.service.forum;
 
 import com.dynonuggets.refonteimplicaction.adapter.forum.CategoryAdapter;
 import com.dynonuggets.refonteimplicaction.dto.forum.CategoryDto;
+import com.dynonuggets.refonteimplicaction.dto.forum.CreateCategoryDto;
 import com.dynonuggets.refonteimplicaction.exception.ImplicactionException;
 import com.dynonuggets.refonteimplicaction.exception.NotFoundException;
 import com.dynonuggets.refonteimplicaction.model.forum.Category;
@@ -60,7 +61,7 @@ public class CategoryService {
     }
 
     @Transactional
-    public CategoryDto createCategory(CategoryDto categoryDto) throws ImplicactionException {
+    public CategoryDto createCategory(CreateCategoryDto categoryDto) throws ImplicactionException {
         Category createdCategory = categoryAdapter.toModel(categoryDto);
         if (categoryDto.getParentId() != null) {
             Category parentCategory = categoryRepository.findById(categoryDto.getParentId())

@@ -1,6 +1,7 @@
 package com.dynonuggets.refonteimplicaction.adapter.forum;
 
 import com.dynonuggets.refonteimplicaction.dto.forum.CategoryDto;
+import com.dynonuggets.refonteimplicaction.dto.forum.CreateCategoryDto;
 import com.dynonuggets.refonteimplicaction.model.forum.Category;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,13 @@ public class CategoryAdapter {
     public Category toModel(CategoryDto dto) {
         return Category.builder()
                 .id(dto.getId())
+                .title(dto.getTitle())
+                .description(dto.getDescription())
+                .build();
+    }
+
+    public Category toModel(CreateCategoryDto dto) {
+        return Category.builder()
                 .title(dto.getTitle())
                 .description(dto.getDescription())
                 .build();
