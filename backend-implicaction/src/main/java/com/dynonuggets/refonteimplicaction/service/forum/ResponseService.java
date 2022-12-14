@@ -15,10 +15,10 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 @Service
 public class ResponseService {
-    ResponseRepository responseRepository;
-    TopicRepository topicRepository;
-    ResponseAdapter responseAdapter;
-    AuthService authService;
+    private final ResponseRepository responseRepository;
+    private final TopicRepository topicRepository;
+    private final ResponseAdapter responseAdapter;
+    private final AuthService authService;
 
     public Page<ResponseDto> getResponsesFromTopic(long topicId, Pageable pageable) {
         Topic topic = topicRepository.getById(topicId);

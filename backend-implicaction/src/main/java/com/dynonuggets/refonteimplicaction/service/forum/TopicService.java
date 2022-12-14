@@ -21,9 +21,9 @@ import static com.dynonuggets.refonteimplicaction.utils.Message.TOPIC_NOT_FOUND_
 @Service
 public class TopicService {
     private final AuthService authService;
-    private TopicRepository topicRepository;
-    private CategoryRepository categoryRepository;
-    private TopicAdapter topicAdapter;
+    private final TopicRepository topicRepository;
+    private final CategoryRepository categoryRepository;
+    private final TopicAdapter topicAdapter;
 
     public Page<TopicDto> getTopicsFromCategory(long categoryId, Pageable pageable) {
         Category category = categoryRepository.findById(categoryId)
