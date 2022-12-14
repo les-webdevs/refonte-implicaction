@@ -3,6 +3,7 @@ package com.dynonuggets.refonteimplicaction.adapter.forum;
 import com.dynonuggets.refonteimplicaction.dto.forum.CategoryDto;
 import com.dynonuggets.refonteimplicaction.dto.forum.CreateCategoryDto;
 import com.dynonuggets.refonteimplicaction.model.forum.Category;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -27,32 +28,26 @@ public class CategoryAdapter {
     }
 
     public CategoryDto toDto(Category model) {
-        CategoryDto.CategoryDtoBuilder builder = CategoryDto.builder()
+        return CategoryDto.builder()
                 .id(model.getId())
                 .title(model.getTitle())
                 .description(model.getDescription())
-                .children(new ArrayList<>());
-        if (model.getParent() != null) {
-            builder.parentId(model.getParent().getId());
-        }
-        return builder.build();
+                .children(new ArrayList<>())
+                .parentId(model.getParent() != null ? model.getParent().getId() : null)
+                .build();
     }
 
     public CategoryDto toDtoWithChildren(Category model) {
-        CategoryDto.CategoryDtoBuilder builder = CategoryDto.builder()
+        List<CategoryDto> children = CollectionUtils.isNotEmpty(model.getChildren())
+                ? model.getChildren().stream().map(this::toDtoWithChildren).collect(Collectors.toList())
+                : new ArrayList<>();
+        return CategoryDto.builder()
                 .id(model.getId())
                 .title(model.getTitle())
                 .description(model.getDescription())
-                .children(new ArrayList<>());
-        if (model.getParent() != null) {
-            builder.parentId(model.getParent().getId());
-        }
-        if (model.getChildren().size() > 0) {
-            List<CategoryDto> children = model.getChildren().stream()
-                    .map(this::toDtoWithChildren)
-                    .collect(Collectors.toList());
-            builder.children(children);
-        }
-        return builder.build();
+                .children(new ArrayList<>())
+                .parentId(model.getParent() != null ? model.getParent().getId() : null)
+                .children(children)
+                .build();
     }
 }
