@@ -14,8 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.dynonuggets.refonteimplicaction.utils.ApiUrls.GET_TOPIC_URI;
-import static com.dynonuggets.refonteimplicaction.utils.ApiUrls.TOPIC_BASE_URI;
+import static com.dynonuggets.refonteimplicaction.utils.ApiUrls.*;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
@@ -43,7 +42,7 @@ public class ForumTopicsController {
         return ResponseEntity.ok(foundDto);
     }
 
-    @GetMapping(GET_TOPIC_URI)
+    @GetMapping(GET_RESPONSE_FROM_TOPIC_URI)
     public ResponseEntity<Page<ResponseDto>> getResponsesFromTopic(
             @PathVariable long topicId,
             @RequestParam(value = "page", defaultValue = "0") int page,
