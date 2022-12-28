@@ -54,4 +54,11 @@ public class ForumTopicsController {
         Page<ResponseDto> responseDtos = responseService.getResponsesFromTopic(topicId, pageable);
         return ResponseEntity.ok(responseDtos);
     }
+
+    @DeleteMapping
+    public ResponseEntity<Void> delete(@PathVariable Long topicId) {
+        topicService.deleteTopic(topicId);
+        return ResponseEntity.noContent().build();
+    }
+
 }

@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.dynonuggets.refonteimplicaction.utils.Message.CATEGORY_NOT_FOUND_MESSAGE;
 import static com.dynonuggets.refonteimplicaction.utils.Message.TOPIC_NOT_FOUND_MESSAGE;
@@ -54,5 +55,16 @@ public class TopicService {
         Topic topic = topicRepository.findById(topicId)
                 .orElseThrow(() -> new NotFoundException(String.format(TOPIC_NOT_FOUND_MESSAGE, topicId)));
         return topicAdapter.toDto(topic);
+    }
+
+    @Transactional
+    public void deleteTopic(Long topicId) {
+        Topic topic = findById(topicId);
+        topicRepository.delete(topic);
+    }
+
+    private Topic findById(Long responseId) {
+        return topicRepository.findById(responseId)
+                .orElseThrow(() -> new NotFoundException(String.format(TOPIC_NOT_FOUND_MESSAGE, responseId)));
     }
 }

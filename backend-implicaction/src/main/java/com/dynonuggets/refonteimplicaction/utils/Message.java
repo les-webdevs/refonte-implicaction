@@ -55,6 +55,7 @@ public class Message {
 
     public static final String RESPONSE_NOT_FOUND_MESSAGE = "No response with id [%s]";
 
+
     private Message() {
         // Empeche la création d'une instance de la classe Message
     }
