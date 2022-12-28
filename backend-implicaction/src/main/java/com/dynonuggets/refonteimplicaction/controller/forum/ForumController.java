@@ -63,6 +63,12 @@ public class ForumController {
         return ResponseEntity.status(CREATED).body(saveDto);
     }
 
+    @PatchMapping("/topics/{topicId}")
+    public ResponseEntity<TopicDto> updateTopic(@RequestBody UpdateTopicDto topicDto) {
+        TopicDto saveDto = topicService.updateTopic(topicDto);
+        return ResponseEntity.ok(saveDto);
+    }
+
     @GetMapping("/topics/{topicId}")
     public ResponseEntity<TopicDto> getTopic(@PathVariable long topicId) {
         TopicDto foundDto = topicService.getTopic(topicId);

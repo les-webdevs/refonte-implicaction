@@ -3,6 +3,7 @@ package com.dynonuggets.refonteimplicaction.service.forum;
 import com.dynonuggets.refonteimplicaction.adapter.forum.TopicAdapter;
 import com.dynonuggets.refonteimplicaction.dto.forum.CreateTopicDto;
 import com.dynonuggets.refonteimplicaction.dto.forum.TopicDto;
+import com.dynonuggets.refonteimplicaction.dto.forum.UpdateTopicDto;
 import com.dynonuggets.refonteimplicaction.exception.NotFoundException;
 import com.dynonuggets.refonteimplicaction.model.forum.Category;
 import com.dynonuggets.refonteimplicaction.model.forum.Topic;
@@ -35,6 +36,16 @@ public class TopicService {
         Category category = categoryRepository.findById(topicDto.getCategoryId())
                 .orElseThrow(() -> new NotFoundException(String.format(CATEGORY_NOT_FOUND_MESSAGE, topicDto.getCategoryId())));
         Topic topic = topicAdapter.toModel(topicDto, authService.getCurrentUser(), category);
+        Topic save = topicRepository.save(topic);
+        return topicAdapter.toDto(save);
+    }
+
+    public TopicDto updateTopic(UpdateTopicDto topicDto) {
+        Category category = categoryRepository.findById(topicDto.getCategoryId())
+                .orElseThrow(() -> new NotFoundException(String.format(CATEGORY_NOT_FOUND_MESSAGE, topicDto.getCategoryId())));
+        Topic existingTopic = topicRepository.findById(topicDto.getId())
+                .orElseThrow(() -> new NotFoundException(String.format(TOPIC_NOT_FOUND_MESSAGE, topicDto.getId())));
+        Topic topic = topicAdapter.mergeWith(existingTopic, topicDto, category);
         Topic save = topicRepository.save(topic);
         return topicAdapter.toDto(save);
     }

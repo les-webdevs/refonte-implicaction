@@ -3,6 +3,7 @@ package com.dynonuggets.refonteimplicaction.adapter.forum;
 import com.dynonuggets.refonteimplicaction.adapter.UserAdapter;
 import com.dynonuggets.refonteimplicaction.dto.forum.CreateTopicDto;
 import com.dynonuggets.refonteimplicaction.dto.forum.TopicDto;
+import com.dynonuggets.refonteimplicaction.dto.forum.UpdateTopicDto;
 import com.dynonuggets.refonteimplicaction.model.User;
 import com.dynonuggets.refonteimplicaction.model.forum.Category;
 import com.dynonuggets.refonteimplicaction.model.forum.Topic;
@@ -10,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 @AllArgsConstructor
 @Component
@@ -39,7 +41,24 @@ public class TopicAdapter {
                 .author(user)
                 .category(category)
                 .build();
+    }
 
+    public Topic mergeWith(Topic existingTopic, UpdateTopicDto dto, Category category) {
+        if (dto.getTitle() != null) {
+            existingTopic.setTitle(dto.getTitle());
+        }
+
+        if (dto.getMessage() != null) {
+            existingTopic.setMessage(dto.getMessage());
+        }
+
+        if (!Objects.equals(category.getId(), existingTopic.getId())) {
+            existingTopic.setCategory(category);
+        }
+
+        existingTopic.setLocked(dto.isLocked());
+        existingTopic.setPinned(dto.isPinned());
+        return existingTopic;
     }
 
     public TopicDto toDto(Topic model) {
