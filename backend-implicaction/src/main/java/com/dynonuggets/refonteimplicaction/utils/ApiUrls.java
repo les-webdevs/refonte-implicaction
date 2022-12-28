@@ -65,6 +65,11 @@ public class ApiUrls {
     public static final String APPLY_BASE_URI = "/api/applies";
     public static final String GET_APPLY_URI = "/{applyId}";
 
+
+    // RESPONSES
+    public static final String RESPONSE_BASE_URI = "/responses";
+
+
     private ApiUrls() {
         // empêche la construction d'un objet ApiUrls
     }

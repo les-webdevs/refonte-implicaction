@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.dynonuggets.refonteimplicaction.utils.ApiUrls.RESPONSE_BASE_URI;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
@@ -24,6 +25,7 @@ public class ForumController {
     private final CategoryService categoryService;
     private final TopicService topicService;
     private final ResponseService responseService;
+
 
     @GetMapping("/categories")
     public ResponseEntity<List<CategoryDto>> getAllCategories() throws ImplicactionException {
@@ -80,10 +82,16 @@ public class ForumController {
         return ResponseEntity.ok(responseDtos);
     }
 
-    @PostMapping("/responses")
+    @PostMapping(RESPONSE_BASE_URI)
     public ResponseEntity<ResponseDto> createResponse(@RequestBody ResponseDto responseDto) {
         ResponseDto saveDto = responseService.createResponse(responseDto);
         return ResponseEntity.status(CREATED).body(saveDto);
+    }
+
+    @DeleteMapping(RESPONSE_BASE_URI)
+    public ResponseEntity<Void> delete(@PathVariable Long responseId) {
+        responseService.deleteResponse(responseId);
+        return ResponseEntity.noContent().build();
     }
 
 }

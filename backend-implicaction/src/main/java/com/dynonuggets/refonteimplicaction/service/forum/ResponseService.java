@@ -2,6 +2,7 @@ package com.dynonuggets.refonteimplicaction.service.forum;
 
 import com.dynonuggets.refonteimplicaction.adapter.forum.ResponseAdapter;
 import com.dynonuggets.refonteimplicaction.dto.forum.ResponseDto;
+import com.dynonuggets.refonteimplicaction.exception.NotFoundException;
 import com.dynonuggets.refonteimplicaction.model.forum.Response;
 import com.dynonuggets.refonteimplicaction.model.forum.Topic;
 import com.dynonuggets.refonteimplicaction.repository.forum.ResponseRepository;
@@ -11,6 +12,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import static com.dynonuggets.refonteimplicaction.utils.Message.RESPONSE_NOT_FOUND_MESSAGE;
 
 @AllArgsConstructor
 @Service
@@ -31,4 +35,14 @@ public class ResponseService {
         return responseAdapter.toDto(save);
     }
 
+    @Transactional
+    public void deleteResponse(Long responseId) {
+        Response response = findById(responseId);
+        responseRepository.delete(response);
+    }
+    
+    private Response findById(Long responseId) {
+        return responseRepository.findById(responseId)
+                .orElseThrow(() -> new NotFoundException(String.format(RESPONSE_NOT_FOUND_MESSAGE, responseId)));
+    }
 }
