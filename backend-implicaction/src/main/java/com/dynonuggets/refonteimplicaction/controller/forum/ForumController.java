@@ -63,7 +63,7 @@ public class ForumController {
         return ResponseEntity.status(CREATED).body(saveDto);
     }
 
-    @PatchMapping("/topics/{topicId}")
+    @PatchMapping("/topics")
     public ResponseEntity<TopicDto> updateTopic(@RequestBody UpdateTopicDto topicDto) {
         TopicDto saveDto = topicService.updateTopic(topicDto);
         return ResponseEntity.ok(saveDto);
