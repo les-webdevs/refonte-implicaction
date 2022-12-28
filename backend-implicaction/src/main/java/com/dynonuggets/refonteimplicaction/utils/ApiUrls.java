@@ -66,8 +66,18 @@ public class ApiUrls {
     public static final String GET_APPLY_URI = "/{applyId}";
 
 
-    // RESPONSES
-    public static final String RESPONSE_BASE_URI = "/responses";
+    // FORUM RESPONSES
+    public static final String RESPONSE_BASE_URI = "/api/forum/responses";
+
+    // FORUM CATEGORIES
+    public static final String CATEGORY_BASE_URI = "/api/forum/categories";
+    public static final String GET_CATEGORY_URI = "/{categoryId}";
+
+    public static final String GET_TOPIC_FROM_CATEGORY_URI = "/{categoryId}/topics";
+
+    // FORUM TOPICS
+    public static final String TOPIC_BASE_URI = "/api/forum/topics";
+    public static final String GET_TOPIC_URI = "/{topicId}";
 
 
     private ApiUrls() {
