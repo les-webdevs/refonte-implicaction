@@ -15,6 +15,7 @@ import {HomeComponent} from './components/home/home.component';
 import { CategoryContentComponent } from './components/category-content/category-content.component';
 import { SubCategoryListComponent } from './components/sub-category-list/sub-category-list.component';
 import { TopicListComponent } from './components/topic-list/topic-list.component';
+import { TopicContentComponent } from './components/topic-content/topic-content.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { TopicListComponent } from './components/topic-list/topic-list.component
     CategoryContentComponent,
     SubCategoryListComponent,
     TopicListComponent,
+    TopicContentComponent,
   ],
   imports: [
     CommonModule,
