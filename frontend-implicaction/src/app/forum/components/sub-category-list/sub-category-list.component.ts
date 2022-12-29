@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Category} from "../../model/category";
 import {Univers} from "../../../shared/enums/univers";
 
@@ -7,7 +7,7 @@ import {Univers} from "../../../shared/enums/univers";
   templateUrl: './sub-category-list.component.html',
   styleUrls: ['./sub-category-list.component.scss']
 })
-export class SubCategoryListComponent implements OnInit {
+export class SubCategoryListComponent {
 
   univers = Univers;
 
@@ -15,9 +15,6 @@ export class SubCategoryListComponent implements OnInit {
   categories: Category[];
 
   constructor() {
-  }
-
-  ngOnInit(): void {
   }
 
 }

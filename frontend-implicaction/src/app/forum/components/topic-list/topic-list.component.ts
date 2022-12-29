@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Topic} from "../../model/topic";
 
 @Component({
@@ -6,15 +6,12 @@ import {Topic} from "../../model/topic";
   templateUrl: './topic-list.component.html',
   styleUrls: ['./topic-list.component.scss']
 })
-export class TopicListComponent implements OnInit {
+export class TopicListComponent {
 
   @Input()
   topics: Topic[];
 
   constructor() {
-  }
-
-  ngOnInit(): void {
   }
 
 }
