@@ -12,9 +12,11 @@ import {ForumRoutingModule} from './forum-routing.module';
 import {SharedModule} from '../shared/shared.module';
 import {IconsModule} from '../icons/icons.module';
 import {HomeComponent} from './components/home/home.component';
-import { CategoryContentComponent } from './components/category-content/category-content.component';
-import { SubCategoryListComponent } from './components/sub-category-list/sub-category-list.component';
-import { TopicListComponent } from './components/topic-list/topic-list.component';
+import {CategoryContentComponent} from './components/category-content/category-content.component';
+import {SubCategoryListComponent} from './components/sub-category-list/sub-category-list.component';
+import {TopicListComponent} from './components/topic-list/topic-list.component';
+import {CreateTopicButtonComponent} from './components/create-topic-button/create-topic-button.component';
+import { CreateTopicModalComponent } from './components/create-topic-modal/create-topic-modal.component';
 
 
 @NgModule({
@@ -24,6 +26,8 @@ import { TopicListComponent } from './components/topic-list/topic-list.component
     CategoryContentComponent,
     SubCategoryListComponent,
     TopicListComponent,
+    CreateTopicButtonComponent,
+    CreateTopicModalComponent,
   ],
   imports: [
     CommonModule,
