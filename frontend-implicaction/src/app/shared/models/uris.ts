@@ -117,5 +117,6 @@ export class Uris {
   static FORUM = class {
     static readonly BASE_URI = 'forum';
     static readonly CATEGORIES = 'forum/categories'
+    static readonly TOPIC = 'forum/topics'
   };
 }

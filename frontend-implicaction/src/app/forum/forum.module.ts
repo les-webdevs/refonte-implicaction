@@ -15,8 +15,14 @@ import {HomeComponent} from './components/home/home.component';
 import {CategoryContentComponent} from './components/category-content/category-content.component';
 import {SubCategoryListComponent} from './components/sub-category-list/sub-category-list.component';
 import {TopicListComponent} from './components/topic-list/topic-list.component';
-import {CreateTopicButtonComponent} from './components/create-topic-button/create-topic-button.component';
-import { CreateTopicModalComponent } from './components/create-topic-modal/create-topic-modal.component';
+import {CreateTopicModalComponent} from './components/create-topic-modal/create-topic-modal.component';
+import {ButtonModule} from "primeng/button";
+import {DialogModule} from "primeng/dialog";
+import {RippleModule} from "primeng/ripple";
+import {InputTextareaModule} from "primeng/inputtextarea";
+import {CheckboxModule} from "primeng/checkbox";
+import {InputTextModule} from "primeng/inputtext";
+import {TreeSelectModule} from "primeng/treeselect";
 
 
 @NgModule({
@@ -26,7 +32,6 @@ import { CreateTopicModalComponent } from './components/create-topic-modal/creat
     CategoryContentComponent,
     SubCategoryListComponent,
     TopicListComponent,
-    CreateTopicButtonComponent,
     CreateTopicModalComponent,
   ],
   imports: [
@@ -39,8 +44,16 @@ import { CreateTopicModalComponent } from './components/create-topic-modal/creat
     ReactiveFormsModule,
     EditorModule,
     IconsModule,
-    TableModule
+    TableModule,
+    ButtonModule,
+    DialogModule,
+    RippleModule,
+    InputTextareaModule,
+    CheckboxModule,
+    InputTextModule,
+    TreeSelectModule,
   ]
+
 })
 export class ForumModule {
 }
