@@ -404,7 +404,7 @@ export class ApiEndpointsService {
   }
 
   createTopic(): string {
-    return ApiEndpointsService.createUrl(`${Uris.FORUM.TOPIC}`);
+    return ApiEndpointsService.createUrl(Uris.FORUM.TOPIC);
   }
 
   /**

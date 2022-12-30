@@ -3,5 +3,5 @@ export interface CreateTopicPayload {
   message: string;
   isLocked: boolean;
   isPinned: boolean;
-  categoryId: number
+  categoryId: number;
 }

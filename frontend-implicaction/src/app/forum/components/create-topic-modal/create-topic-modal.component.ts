@@ -9,11 +9,11 @@ import {ToasterService} from "../../../core/services/toaster.service";
 
 
 interface CategoryNode {
-  id: number,
-  label: string,
-  data: string,
-  selectable: boolean,
-  children?: CategoryNode[]
+  id: number;
+  label: string;
+  data: string;
+  selectable: boolean;
+  children?: CategoryNode[];
 }
 
 @Component({
@@ -31,7 +31,7 @@ export class CreateTopicModalComponent implements OnInit {
     isPinned: new FormControl<boolean>(false),
     category: new FormControl<Category>(null, Validators.required)
   });
-  categoriesNodes: CategoryNode[]
+  categoriesNodes: CategoryNode[];
 
   constructor(private categoryService: CategoryService,
               private topicService: TopicService,
@@ -58,7 +58,7 @@ export class CreateTopicModalComponent implements OnInit {
       categoryId: this.topicForm.value.category.id
     }
     this.topicService.createTopic(createTopic).subscribe(res => {
-      this.toastService.success("Topic créé!", "Le topic a bien été créé");
+      this.toastService.success('Topic créé!', 'Le topic a bien été créé');
       this.display = false;
     })
 
@@ -66,13 +66,13 @@ export class CreateTopicModalComponent implements OnInit {
 
   private categoriesToCategoriesNode(categories: Category[]): CategoryNode[] {
     let nCategories: CategoryNode[] = [];
-    categories.forEach((val) => {
+    categories.forEach(val => {
       nCategories.push(
         {
           id: val.id,
           label: val.title,
           data: val.title,
-          selectable: val.parentId != undefined,
+          selectable: val.parentId !== undefined,
           children: this.categoriesToCategoriesNode(val.children)
         })
     })
