@@ -15,7 +15,6 @@ import {HomeComponent} from './components/home/home.component';
 import {CategoryContentComponent} from './components/category-content/category-content.component';
 import {SubCategoryListComponent} from './components/sub-category-list/sub-category-list.component';
 import {TopicListComponent} from './components/topic-list/topic-list.component';
-import {CreateTopicModalComponent} from './components/create-topic-modal/create-topic-modal.component';
 import {ButtonModule} from "primeng/button";
 import {DialogModule} from "primeng/dialog";
 import {RippleModule} from "primeng/ripple";
@@ -23,6 +22,8 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 import {CheckboxModule} from "primeng/checkbox";
 import {InputTextModule} from "primeng/inputtext";
 import {TreeSelectModule} from "primeng/treeselect";
+import {CreateTopicFormComponent} from './components/create-topic-form/create-topic-form.component';
+import {CreateTopicButtonComponent} from './components/create-topic-button/create-topic-button.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import {TreeSelectModule} from "primeng/treeselect";
     CategoryContentComponent,
     SubCategoryListComponent,
     TopicListComponent,
-    CreateTopicModalComponent,
+    CreateTopicFormComponent,
+    CreateTopicButtonComponent,
   ],
   imports: [
     CommonModule,

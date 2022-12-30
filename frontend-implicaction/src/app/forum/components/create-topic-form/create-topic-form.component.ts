@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {CategoryService} from "../../services/category.service";
-import {Observable} from "rxjs";
 import {Category} from "../../model/category";
-import {CreateTopicPayload} from "../../model/createTopicPayload";
+import {CategoryService} from "../../services/category.service";
 import {TopicService} from "../../services/topic.service";
 import {ToasterService} from "../../../core/services/toaster.service";
-
+import {Observable} from "rxjs";
+import {CreateTopicPayload} from "../../model/createTopicPayload";
+import {SidebarContentComponent} from "../../../shared/models/sidebar-props";
+import {SidebarService} from "../../../shared/services/sidebar.service";
 
 interface CategoryNode {
   id: number;
@@ -17,13 +18,12 @@ interface CategoryNode {
 }
 
 @Component({
-  selector: 'app-create-topic-modal',
-  templateUrl: './create-topic-modal.component.html',
-  styleUrls: ['./create-topic-modal.component.scss']
+  selector: 'app-create-topic-form',
+  templateUrl: './create-topic-form.component.html',
+  styleUrls: ['./create-topic-form.component.scss']
 })
-export class CreateTopicModalComponent implements OnInit {
+export class CreateTopicFormComponent extends SidebarContentComponent implements OnInit {
 
-  display: boolean = false;
   topicForm = new FormGroup({
     title: new FormControl<string>('', Validators.required),
     message: new FormControl<string>('', Validators.required),
@@ -31,15 +31,15 @@ export class CreateTopicModalComponent implements OnInit {
     isPinned: new FormControl<boolean>(false),
     category: new FormControl<Category>(null, Validators.required)
   });
+
   categoriesNodes: CategoryNode[];
 
   constructor(private categoryService: CategoryService,
               private topicService: TopicService,
-              private toastService: ToasterService) {
-  }
-
-  showDialog() {
-    this.display = true;
+              private toastService: ToasterService,
+              private sidebarService: SidebarService,
+  ) {
+    super();
   }
 
   ngOnInit(): void {
@@ -59,9 +59,8 @@ export class CreateTopicModalComponent implements OnInit {
     }
     this.topicService.createTopic(createTopic).subscribe(res => {
       this.toastService.success('Topic créé!', 'Le topic a bien été créé');
-      this.display = false;
+      this.sidebarService.close();
     })
-
   }
 
   private categoriesToCategoriesNode(categories: Category[]): CategoryNode[] {
@@ -72,7 +71,7 @@ export class CreateTopicModalComponent implements OnInit {
           id: val.id,
           label: val.title,
           data: val.title,
-          selectable: val.parentId !== undefined,
+          selectable: val.parentId !== null,
           children: this.categoriesToCategoriesNode(val.children)
         })
     })
