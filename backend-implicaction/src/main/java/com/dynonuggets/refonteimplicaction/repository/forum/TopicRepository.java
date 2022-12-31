@@ -8,8 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TopicRepository extends JpaRepository<Topic, Long> {
-    // TODO: use criteria to order depending on a parameter
-    Page<Topic> findByCategoryOrderByEditedAt(Category category, Pageable pageable);
+    Page<Topic> findByCategory(Category category, Pageable pageable);
 
-    Page<Topic> findByAuthorOrderByEditedAt(User author, Pageable pageable);
+    Page<Topic> findByAuthor(User author, Pageable pageable);
 }

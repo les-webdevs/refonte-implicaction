@@ -30,7 +30,7 @@ public class TopicService {
     public Page<TopicDto> getTopicsFromCategory(long categoryId, Pageable pageable) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new NotFoundException(String.format(CATEGORY_NOT_FOUND_MESSAGE, categoryId)));
-        return topicRepository.findByCategoryOrderByEditedAt(category, pageable).map(topicAdapter::toDto);
+        return topicRepository.findByCategory(category, pageable).map(topicAdapter::toDto);
     }
 
     public TopicDto createTopic(CreateTopicDto topicDto) {
