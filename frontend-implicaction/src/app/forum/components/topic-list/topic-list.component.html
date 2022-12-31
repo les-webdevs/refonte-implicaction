@@ -1,10 +1,36 @@
 <div *ngIf="topics.length > 0; else elseBlock">
-  <ul>
-    <li *ngFor="let topic of topics">
-      <a href="#">{{ topic.title }}</a> by <a href="#">{{ topic.author.username }}</a> à {{ topic.createdAt }}
-    </li>
-  </ul>
+  <div class="card p-0 bg-white border-dark">
+    <div class="card-body p-4">
+      <div *ngFor="let topic of topics"
+           class="topic border-bottom px-2 py-4 row col justify-content-between border-dark">
+        <div class="col-12 col-lg-6 col-xl-6 d-flex align-items-center">
+          <div class="topic-info">
+            <div class="text-wrap pb-1 text-dark fw-bold m-0 mb-1">
+              <a routerLink="/{{ univers.FORUM.url }}/topic/{{ topic.id }}">{{ topic.title }}</a>
+            </div>
+            <div class="text-justify">
+              <a href="#">{{ topic.author.username }}</a> - {{ topic.createdAt }}
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-3 col-xl-3 col-xxl-auto d-flex align-items-center stats">
+          <div class="responses">6 réponses</div>
+        </div>
+        <div class="col-12 col-lg-3 col-xl-3 col-xxl-auto d-flex align-items-center">
+          <div class="last-response">
+            <div class="time">
+              <a href="#">21 Février 2022</a>
+            </div>
+            <div class="author">
+              <a href="#">admin</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <ng-template #elseBlock>
   Pas de sujet :(
 </ng-template>
+
