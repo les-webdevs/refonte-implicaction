@@ -46,7 +46,7 @@ export class CreateTopicFormComponent extends SidebarContentComponent implements
     const categories: Observable<Category[]> = this.categoryService.getCategories();
     categories.subscribe((val) => {
       this.categoriesNodes = this.categoriesToCategoriesNode(val);
-    })
+    });
   }
 
   onSubmit() {
@@ -73,8 +73,8 @@ export class CreateTopicFormComponent extends SidebarContentComponent implements
           data: val.title,
           selectable: val.parentId !== null,
           children: this.categoriesToCategoriesNode(val.children)
-        })
-    })
+        });
+    });
     return nCategories;
   }
 }

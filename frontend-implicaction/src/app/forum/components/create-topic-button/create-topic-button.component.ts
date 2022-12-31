@@ -9,7 +9,7 @@ import {CreateTopicFormComponent} from "../create-topic-form/create-topic-form.c
 })
 export class CreateTopicButtonComponent {
 
-  @Input() buttonName: string = ""
+  @Input() buttonName: string = "";
 
   constructor(private sidebarService: SidebarService) {
   }
@@ -20,7 +20,7 @@ export class CreateTopicButtonComponent {
         component: CreateTopicFormComponent,
         width: 500
       }
-    )
+    );
 
   }
 
