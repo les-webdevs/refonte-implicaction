@@ -21,15 +21,21 @@ export class CategoryContentComponent extends BaseWithPaginationAndFilterCompone
   category$: Observable<Category>;
   paginatedTopics$: Observable<Pageable<Topic>>;
   subCategories$: Observable<Category[]>;
+  private id$: Observable<number>;
 
   constructor(private categoryService: CategoryService, private currentRoute: ActivatedRoute) {
     super(currentRoute);
   }
 
   ngOnInit(): void {
-    const id$ = this.currentRoute.params.pipe(map(map => +map['id']));
-    this.category$ = id$.pipe(switchMap(id => this.categoryService.getCategory(id)));
+    this.pageable = {...this.pageable, sortBy: 'lastAction', sortOrder: 'DESC'};
+    this.id$ = this.currentRoute.params.pipe(map(map => +map['id']));
+    this.category$ = this.id$.pipe(switchMap(id => this.categoryService.getCategory(id)));
     this.subCategories$ = this.category$.pipe(switchMap(category => this.categoryService.getCategories(category.children)));
-    this.paginatedTopics$ = id$.pipe(switchMap(id => this.categoryService.getCategoryTopics(id, this.pageable)));
+    this.paginate(this.pageable);
+  }
+
+  protected innerPaginate() {
+    this.paginatedTopics$ = this.id$.pipe(switchMap(id => this.categoryService.getCategoryTopics(id, this.pageable)));
   }
 }

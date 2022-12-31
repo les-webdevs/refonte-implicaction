@@ -1,7 +1,8 @@
 <div *ngIf="category$ | async as category">
   <h2>{{ category.title }}</h2>
+  <p>{{ category.description }}</p>
 
-  <div *ngIf="category.children.length > 0">
+  <div *ngIf="category.children.length > 0" class="mb-4">
     <h3>Sous-catégories</h3>
     <app-sub-category-list
       *ngIf="subCategories$ | async as subCategories"
