@@ -74,6 +74,7 @@ public class TopicAdapter {
                 .author(userAdapter.toDto(model.getAuthor()))
                 .category(categoryAdapter.toDto(model.getCategory()))
                 .responses(new ArrayList<>())
+                .lastAction(model.getLastAction())
                 .build();
     }
 }
