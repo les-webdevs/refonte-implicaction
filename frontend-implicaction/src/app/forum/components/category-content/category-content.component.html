@@ -14,6 +14,7 @@
   <app-forum-block *ngIf="paginatedTopics$ | async as paginatedTopics">
     <ng-container title>Sujets</ng-container>
     <ng-container actions>
+      <app-create-topic-button buttonName="Créer un topic"></app-create-topic-button>
     </ng-container>
     <app-topic-list [topics]="paginatedTopics.content" content></app-topic-list>
   </app-forum-block>
