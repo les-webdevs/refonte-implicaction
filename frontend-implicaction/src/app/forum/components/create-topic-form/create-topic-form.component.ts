@@ -64,17 +64,12 @@ export class CreateTopicFormComponent extends SidebarContentComponent implements
   }
 
   private categoriesToCategoriesNode(categories: Category[]): CategoryNode[] {
-    let nCategories: CategoryNode[] = [];
-    categories.forEach(val => {
-      nCategories.push(
-        {
-          id: val.id,
-          label: val.title,
-          data: val.title,
-          selectable: val.parentId !== null,
-          children: this.categoriesToCategoriesNode(val.children)
-        });
-    });
-    return nCategories;
+    return categories.map(({id, title, parentId, children}) => ({
+      id: id,
+      label: title,
+      selectable: parentId !== null,
+      data: "",
+      children: this.categoriesToCategoriesNode(children)
+    }));
   }
 }

@@ -3,7 +3,7 @@ import {User} from "../../shared/models/user";
 import {Response} from "./response";
 
 export interface Topic {
-  id: number
+  id: number;
   title: string;
   message: string;
   createdAt: number;
