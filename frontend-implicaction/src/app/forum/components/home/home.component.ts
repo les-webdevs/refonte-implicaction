@@ -20,7 +20,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.categories$ = this.categoryService.getRootCategories()
       .pipe(switchMap(parentCategories => {
-        console.log(parentCategories);
         const children$ = this.fetchRootCategoriesChildren(parentCategories);
 
         return children$.pipe(
