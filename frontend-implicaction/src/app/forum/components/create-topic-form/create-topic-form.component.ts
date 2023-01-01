@@ -59,6 +59,9 @@ export class CreateTopicFormComponent extends SidebarContentComponent implements
     };
     this.topicService.createTopic(createTopic).subscribe(res => {
       this.toastService.success('Topic créé!', 'Le topic a bien été créé');
+    }, error => {
+      this.toastService.error('Oops', 'Une erreur est survenue');
+    }, () => {
       this.sidebarService.close();
     });
   }
