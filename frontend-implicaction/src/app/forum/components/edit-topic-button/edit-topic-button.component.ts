@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {SidebarService} from "../../../shared/services/sidebar.service";
+import {EditTopicFormComponent} from "../edit-topic-form/edit-topic-form.component";
+import {Topic} from '../../model/topic';
 
 @Component({
   selector: 'app-edit-topic-button',
@@ -7,9 +10,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditTopicButtonComponent {
 
-  constructor() { }
+  @Input() buttonName: string = '';
+  @Input() topicId?: number;
+  @Input() topic?: Topic;
 
-  ngOnInit(): void {
+
+  constructor(private sidebarService: SidebarService) {
+  }
+
+  onClick() {
+    this.sidebarService.open({
+      title: 'Editer un topic',
+      component: EditTopicFormComponent,
+      width: 500,
+      input: {id: this.topicId, post: this.topic}
+    });
   }
 
 }

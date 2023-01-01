@@ -3,7 +3,7 @@
   [formGroup]="topicForm">
 
   <div class="form-floating mb-4">
-    <p-treeSelect [options]="categoriesNodes"
+    <p-treeSelect [options]="categoriesNodes$ | async"
                   appendTo="body"
                   formControlName="category"
                   placeholder="Sélectionner une catégorie">
