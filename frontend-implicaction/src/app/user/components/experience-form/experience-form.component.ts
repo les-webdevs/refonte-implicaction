@@ -42,6 +42,7 @@ export class ExperienceFormComponent extends SidebarContentComponent<ExperienceF
     this.experience = this.sidebarInput ? {...this.sidebarInput.experience} : undefined;
     this.isUpdate = !!this.sidebarInput?.experience?.id;
     this.initForm(this.experience);
+    console.log(this.sidebarInput);
   }
 
   onSubmit(): void {
