@@ -75,6 +75,7 @@ public class TopicAdapter {
                 .category(categoryAdapter.toDtoWithoutChildren(model.getCategory()))
                 .responses(new ArrayList<>())
                 .lastAction(model.getLastAction())
+                .responsesCount(model.getResponses().size())
                 .build();
     }
 }

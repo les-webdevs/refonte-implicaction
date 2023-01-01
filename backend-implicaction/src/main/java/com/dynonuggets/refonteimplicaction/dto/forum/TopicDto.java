@@ -23,4 +23,5 @@ public class TopicDto {
     private List<ResponseDto> responses;
     private CategoryDto category;
     private Instant lastAction;
+    private long responsesCount;
 }
