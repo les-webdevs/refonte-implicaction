@@ -10,12 +10,15 @@ import {UserContextService} from '../../../shared/services/user-context.service'
 import {ExperienceService} from '../../services/experience.service';
 import {Constants} from '../../../config/constants';
 
+export type ExperienceFormProps = { experience: WorkExperience } | undefined
+
+
 @Component({
   selector: 'app-experience-form',
   templateUrl: './experience-form.component.html',
   styleUrls: ['./experience-form.component.scss']
 })
-export class ExperienceFormComponent extends SidebarContentComponent implements OnInit {
+export class ExperienceFormComponent extends SidebarContentComponent<ExperienceFormProps> implements OnInit {
 
   formExperience: UntypedFormGroup;
   currentUserId: string;

@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './edit-topic-button.component.html',
   styleUrls: ['./edit-topic-button.component.scss']
 })
-export class EditTopicButtonComponent implements OnInit {
+export class EditTopicButtonComponent {
 
   constructor() { }
 
