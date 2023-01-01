@@ -31,6 +31,9 @@ export class CategoryContentComponent extends BaseWithPaginationAndFilterCompone
     this.pageable = {...this.pageable, sortBy: 'lastAction', sortOrder: 'DESC'};
     this.id$ = this.currentRoute.params.pipe(map(map => +map['id']));
     this.category$ = this.id$.pipe(switchMap(id => this.categoryService.getCategory(id)));
+    // TODO: demander à Matthieu s'il y a une meilleure façon de gerer ça.
+    // Actuellement, faire un `subCategories$ | async` fait un refetch du
+    // `category$` ce qui n'est pas vraiment une bonne chose. (pas envie de passer par un subscribe)
     this.subCategories$ = this.category$.pipe(switchMap(category => this.categoryService.getCategories(category.children)));
     this.paginate(this.pageable);
   }

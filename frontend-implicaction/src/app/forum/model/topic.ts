@@ -14,4 +14,5 @@ export interface Topic {
   response: Response[];
   category: Category;
   responsesCount: number;
+  lastResponse?: Response;
 }

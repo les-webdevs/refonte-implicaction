@@ -6,11 +6,13 @@ import com.dynonuggets.refonteimplicaction.dto.forum.TopicDto;
 import com.dynonuggets.refonteimplicaction.dto.forum.UpdateTopicDto;
 import com.dynonuggets.refonteimplicaction.model.User;
 import com.dynonuggets.refonteimplicaction.model.forum.Category;
+import com.dynonuggets.refonteimplicaction.model.forum.Response;
 import com.dynonuggets.refonteimplicaction.model.forum.Topic;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @AllArgsConstructor
@@ -19,6 +21,7 @@ public class TopicAdapter {
 
     private final UserAdapter userAdapter;
     private final CategoryAdapter categoryAdapter;
+    private final ResponseAdapter responseAdapter;
 
     public Topic toModel(TopicDto dto, User user, Category category) {
         return Topic.builder()
@@ -62,7 +65,6 @@ public class TopicAdapter {
     }
 
     public TopicDto toDto(Topic model) {
-        // /api/forum/topics/3
         return TopicDto.builder()
                 .id(model.getId())
                 .title(model.getTitle())
@@ -74,6 +76,26 @@ public class TopicAdapter {
                 .author(userAdapter.toDto(model.getAuthor()))
                 .category(categoryAdapter.toDtoWithoutChildren(model.getCategory()))
                 .responses(new ArrayList<>())
+                .lastResponse(null)
+                .lastAction(model.getLastAction())
+                .responsesCount(model.getResponses().size())
+                .build();
+    }
+
+    public TopicDto toDtoWithLastResponse(Topic model) {
+        List<Response> responses = model.getResponses();
+        return TopicDto.builder()
+                .id(model.getId())
+                .title(model.getTitle())
+                .message(model.getMessage())
+                .createdAt(model.getCreatedAt())
+                .editedAt(model.getEditedAt())
+                .isPinned(model.isPinned())
+                .isLocked(model.isLocked())
+                .author(userAdapter.toDto(model.getAuthor()))
+                .category(categoryAdapter.toDtoWithoutChildren(model.getCategory()))
+                .responses(new ArrayList<>())
+                .lastResponse(responses.size() > 0 ? responseAdapter.toDto(responses.get(responses.size() - 1)) : null)
                 .lastAction(model.getLastAction())
                 .responsesCount(model.getResponses().size())
                 .build();

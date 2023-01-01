@@ -24,4 +24,5 @@ public class TopicDto {
     private CategoryDto category;
     private Instant lastAction;
     private long responsesCount;
+    private ResponseDto lastResponse;
 }
