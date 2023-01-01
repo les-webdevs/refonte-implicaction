@@ -71,7 +71,7 @@ export class CreateTopicFormComponent extends SidebarContentComponent implements
       id: id,
       label: title,
       selectable: parentId !== null,
-      data: "",
+      data: '',
       children: this.categoriesToCategoriesNode(children)
     }));
   }
