@@ -1,6 +1,6 @@
 <ng-container *ngIf="topicForm$ | async as topicForm">
-  <form *ngIf="categoriesNodes$ | async as catNodes"
-        (ngSubmit)="onSubmit()"
+  <form (ngSubmit)="onSubmit()"
+        *ngIf="categoriesNodes$ | async as catNodes"
         [formGroup]="topicForm$ | async">
 
     <div class="form-floating mb-4">
@@ -24,17 +24,6 @@
       >
         Titre du topic
       </label>
-    </div>
-
-
-    <div class="form-floating mb-4">
-
-      <p-editor
-        [style]="{'height':'200px'}"
-        formControlName="message"
-        placeholder="Message"
-      >
-      </p-editor>
     </div>
 
 
