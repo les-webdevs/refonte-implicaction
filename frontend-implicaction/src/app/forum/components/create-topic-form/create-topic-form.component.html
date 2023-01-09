@@ -2,7 +2,7 @@
   (ngSubmit)="onSubmit()"
   [formGroup]="topicForm">
 
-  <div class="form-floating mb-4" *ngIf="categoriesNodes$ | async as catNodes">
+  <div *ngIf="categoriesNodes$ | async as catNodes" class="form-floating mb-4">
     <p-treeSelect [options]="catNodes.tree"
                   appendTo="body"
                   formControlName="category"
