@@ -4,17 +4,13 @@ import {Topic} from '../../model/topic';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {CategoryTreeSelectNode} from '../../model/categoryTreeSelectNode';
 import {TopicService} from '../../services/topic.service';
-import {Category} from '../../model/category';
-import {CategoryService} from '../../services/category.service';
-import {Observable} from 'rxjs';
+import {CategoryService, ITree} from '../../services/category.service';
+import {BehaviorSubject, Observable, of, zip} from 'rxjs';
 import {TopicPayload} from '../../model/topicPayload';
 import {ToasterService} from '../../../core/services/toaster.service';
 import {SidebarService} from '../../../shared/services/sidebar.service';
 
-export type EditTopicFormProps = {
-  post?: Topic;
-  id?: number;
-};
+export type EditTopicFormProps = Topic | number;
 
 @Component({
   selector: 'app-edit-topic-form',
@@ -23,9 +19,12 @@ export type EditTopicFormProps = {
 })
 export class EditTopicFormComponent extends SidebarContentComponent<EditTopicFormProps> implements OnInit {
 
-  categoriesNodes$: Observable<CategoryTreeSelectNode[]>;
-  topicForm: FormGroup;
-  selectedTopic: Topic;
+  topicId: number;
+  categoriesNodes$: Observable<ITree>;
+  topic$: Observable<Topic>;
+  topicForm$: Observable<unknown>;
+  topicForm = new BehaviorSubject<FormGroup>(null);
+  seletedNode: CategoryTreeSelectNode;
 
   constructor(private topicService: TopicService,
               private categoryService: CategoryService,
@@ -35,40 +34,41 @@ export class EditTopicFormComponent extends SidebarContentComponent<EditTopicFor
   }
 
   ngOnInit(): void {
+    this.topicId = typeof this.sidebarInput === "number" ? this.sidebarInput : this.sidebarInput.id;
+    this.topic$ = this.getTopic(this.sidebarInput);
     this.categoriesNodes$ = this.categoryService.getCategoriesTreeSelectNode();
-    this.initTopicForm({id: this.sidebarInput.id, post: this.sidebarInput.post});
+    zip(this.topic$, this.categoriesNodes$).subscribe(([topic, {map}]) =>
+      this.topicForm.next(this.createTopicForm(topic, map.get(topic.category.id)))
+    );
+    this.topicForm$ = this.topicForm.asObservable();
   }
 
-  initTopicForm(data: EditTopicFormProps) {
-    if (data.post) {
-      this.selectedTopic = data.post;
-      this.topicForm = this.topicFormGroupAdapter(data.post);
-    } else {
-      this.topicService.getTopic(data.id).subscribe(res => {
-        this.selectedTopic = res;
-        this.topicForm = this.topicFormGroupAdapter(res);
-      });
+  getTopic(postOrId: EditTopicFormProps) {
+    if (typeof postOrId === "number") {
+      return this.topicService.getTopic(postOrId);
     }
+    return of(postOrId);
   }
 
-  topicFormGroupAdapter(topic: Topic) {
+  createTopicForm(topic: Topic, category: CategoryTreeSelectNode) {
     return new FormGroup({
       title: new FormControl<string>(topic.title, Validators.required),
       message: new FormControl<string>(topic.message, Validators.required),
       isLocked: new FormControl<boolean>(topic.locked),
       isPinned: new FormControl<boolean>(topic.pinned),
-      category: new FormControl<Category>(null, Validators.required) //TODO: RECUPERER LE BON NOEUD
+      category: new FormControl(category, Validators.required) //TODO: RECUPERER LE BON NOEUD
     });
   }
 
   onSubmit() {
+    const topicForm = this.topicForm.getValue();
     const editedTopic: TopicPayload = {
-      id: this.selectedTopic.id,
-      title: this.topicForm.value.title,
-      message: this.topicForm.value.message,
-      pinned: this.topicForm.value.isPinned,
-      locked: this.topicForm.value.isLocked,
-      categoryId: this.topicForm.value.category.id
+      id: this.topicId,
+      title: topicForm.value.title,
+      message: topicForm.value.message,
+      pinned: topicForm.value.isPinned,
+      locked: topicForm.value.isLocked,
+      categoryId: topicForm.value.category.id
     };
 
     this.topicService.editTopic(editedTopic).subscribe(res => {
@@ -79,5 +79,4 @@ export class EditTopicFormComponent extends SidebarContentComponent<EditTopicFor
       this.sidebarService.close();
     });
   }
-
 }

@@ -23,7 +23,7 @@ export class EditTopicButtonComponent {
       title: 'Editer un topic',
       component: EditTopicFormComponent,
       width: 500,
-      input: {id: this.topicId, post: this.topic}
+      input: this.topic ?? this.topicId
     });
   }
 

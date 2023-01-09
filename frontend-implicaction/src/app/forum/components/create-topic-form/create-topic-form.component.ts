@@ -1,13 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Category} from "../../model/category";
-import {CategoryService} from "../../services/category.service";
+import {CategoryService, ITree} from "../../services/category.service";
 import {TopicService} from "../../services/topic.service";
 import {ToasterService} from "../../../core/services/toaster.service";
 import {TopicPayload} from "../../model/topicPayload";
 import {SidebarContentComponent} from "../../../shared/models/sidebar-props";
 import {SidebarService} from "../../../shared/services/sidebar.service";
-import {CategoryTreeSelectNode} from "../../model/categoryTreeSelectNode";
 import {Observable} from 'rxjs';
 
 
@@ -26,7 +25,7 @@ export class CreateTopicFormComponent extends SidebarContentComponent<never> imp
     category: new FormControl<Category>(null, Validators.required)
   });
 
-  categoriesNodes$: Observable<CategoryTreeSelectNode[]>;
+  categoriesNodes$: Observable<ITree>;
 
   constructor(
     private categoryService: CategoryService,
