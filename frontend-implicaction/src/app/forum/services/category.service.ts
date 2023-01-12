@@ -80,7 +80,7 @@ export class CategoryService {
             selectable: parentId !== null,
             data: '',
             children: categoryToCategoryTreeSelectNode(children)
-          }
+          };
           node_map.set(id, node);
           return node;
         });
