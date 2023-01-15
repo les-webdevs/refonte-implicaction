@@ -9,6 +9,7 @@ import com.dynonuggets.refonteimplicaction.model.forum.Category;
 import com.dynonuggets.refonteimplicaction.model.forum.Response;
 import com.dynonuggets.refonteimplicaction.model.forum.Topic;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -16,11 +17,17 @@ import java.util.List;
 import java.util.Objects;
 
 @AllArgsConstructor
+@Lazy
 @Component
 public class TopicAdapter {
 
+    @Lazy
     private final UserAdapter userAdapter;
+
+    @Lazy
     private final CategoryAdapter categoryAdapter;
+
+    @Lazy
     private final ResponseAdapter responseAdapter;
 
     public Topic toModel(TopicDto dto, User user, Category category) {
