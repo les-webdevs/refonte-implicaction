@@ -1,4 +1,4 @@
-import {Topic} from './topic';
+import {LastCategoryUpdate} from './lastCategoryUpdate';
 
 export interface Category {
   id: number;
@@ -6,5 +6,5 @@ export interface Category {
   description?: string;
   parentId?: number;
   children: number[];
-  recentlyUpdatedTopic?: Topic;
+  lastUpdate?: LastCategoryUpdate;
 }

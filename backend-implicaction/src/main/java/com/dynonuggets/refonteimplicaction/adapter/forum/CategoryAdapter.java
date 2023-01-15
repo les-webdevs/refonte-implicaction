@@ -17,6 +17,9 @@ public class CategoryAdapter {
     @Lazy
     private final TopicAdapter topicAdapter;
 
+    @Lazy
+    private final LastCategoryUpdateAdapter lastCategoryUpdateAdapter;
+
     public Category toModel(CategoryDto dto) {
         return Category.builder()
                 .id(dto.getId())
@@ -57,8 +60,12 @@ public class CategoryAdapter {
                 .title(model.getTitle())
                 .description(model.getDescription())
                 .parentId(model.getParent() != null ? model.getParent().getId() : null)
-                .children(model.getChildren().stream().map(Category::getId).collect(Collectors.toList()))
-                .recentlyUpdatedTopic(topicAdapter.toDto(recentlyUpdatedTopic))
+                .children(
+                        model.getChildren().stream()
+                                .map(Category::getId)
+                                .collect(Collectors.toList())
+                )
+                .lastUpdate(lastCategoryUpdateAdapter.toDto(recentlyUpdatedTopic))
                 .build();
     }
 }
