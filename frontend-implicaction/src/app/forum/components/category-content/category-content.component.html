@@ -2,10 +2,9 @@
   <h2>{{ category.title }}</h2>
   <p>{{ category.description }}</p>
 
-  <app-forum-block>
+  <app-forum-block *ngIf="subCategories$ | async as subCategories">
     <ng-container title>Sous-catégories</ng-container>
     <app-sub-category-list
-      *ngIf="subCategories$ | async as subCategories"
       [categories]="subCategories"
       content
     ></app-sub-category-list>

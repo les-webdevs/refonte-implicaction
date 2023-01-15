@@ -17,14 +17,14 @@
         <!--        <div class="responses">456 réponses</div>-->
       </div>
       <div class="col-12 col-lg-3 col-xl-3 col-xxl-auto d-flex align-items-center">
-        <div class="last-topic w-100">
+        <div *ngIf="subCategory.recentlyUpdatedTopic as topic" class="last-topic w-100">
           <div class="overflow-ellipsis">
-            <a href="#">Important Recrutements Rédacteurs - 2021</a>
+            <a href="#">{{ topic.title }}</a>
           </div>
           <div class="meta">
-            <a class="time" href="#">21 Février 2022</a>
+            <a class="time" href="#">{{ topic.lastResponse?.createdAt ?? topic.createdAt }}</a>
             -
-            <a class="author" href="#">admin</a>
+            <a class="author" href="#">{{ topic.lastResponse?.author ?? topic.author.username }}</a>
           </div>
         </div>
       </div>
