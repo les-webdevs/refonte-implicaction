@@ -42,9 +42,15 @@ public class ForumCategoriesController {
     }
 
     @GetMapping(GET_CATEGORY_URI)
-    public ResponseEntity<List<CategoryDto>> getCategory(@PathVariable List<Long> categoryIds) {
+    public ResponseEntity<List<CategoryDto>> getCategory(@PathVariable List<Long> categoryIds, @RequestParam(defaultValue = "false") boolean withRecentlyUpdatedTopic) {
+        // TODO: fetch ALL topics in one request
+        System.out.println("withRecentlyUpdatedTopic ? " + withRecentlyUpdatedTopic);
         List<CategoryDto> categories = categoryIds.stream()
-                .map(categoryService::getCategory)
+                .map(
+                        withRecentlyUpdatedTopic
+                                ? categoryService::getCategoryWithRecentlyUpdatedTopic
+                                : categoryService::getCategory
+                )
                 .collect(Collectors.toList());
         return ResponseEntity.ok(categories);
     }

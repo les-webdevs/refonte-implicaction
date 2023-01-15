@@ -6,7 +6,9 @@ import com.dynonuggets.refonteimplicaction.dto.forum.CreateCategoryDto;
 import com.dynonuggets.refonteimplicaction.exception.ImplicactionException;
 import com.dynonuggets.refonteimplicaction.exception.NotFoundException;
 import com.dynonuggets.refonteimplicaction.model.forum.Category;
+import com.dynonuggets.refonteimplicaction.model.forum.Topic;
 import com.dynonuggets.refonteimplicaction.repository.forum.CategoryRepository;
+import com.dynonuggets.refonteimplicaction.repository.forum.TopicRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +23,7 @@ import static com.dynonuggets.refonteimplicaction.utils.Message.CATEGORY_NOT_FOU
 public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryAdapter categoryAdapter;
+    private final TopicRepository topicRepository;
 
     @Transactional
     public List<CategoryDto> getCategories() {
@@ -42,6 +45,19 @@ public class CategoryService {
                 .orElseThrow(() -> new NotFoundException(String.format(CATEGORY_NOT_FOUND_MESSAGE, id)));
 
         return categoryAdapter.toDto(category);
+    }
+
+    @Transactional
+    public CategoryDto getCategoryWithRecentlyUpdatedTopic(long id) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(String.format(CATEGORY_NOT_FOUND_MESSAGE, id)));
+
+        System.out.println("before");
+        Topic recentlyUpdatedTopic = topicRepository
+                .findFirstByCategoryOrderByLastActionDesc(category)
+                .orElse(null);
+        System.out.println("after");
+        return categoryAdapter.toDtoWithMostRecentlyUpdatedTopic(category, recentlyUpdatedTopic);
     }
 
     @Transactional
