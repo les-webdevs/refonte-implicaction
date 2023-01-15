@@ -33,6 +33,26 @@ public class CategoryService {
     }
 
     @Transactional
+    public List<CategoryDto> getCategories(List<Long> categoryIds) {
+        return categoryRepository.findAllById(categoryIds).stream()
+                .map(categoryAdapter::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<CategoryDto> getCategoriesWithLastUpdate(List<Long> categoryIds) {
+        return categoryRepository.findAllById(categoryIds).stream()
+                .map(category -> {
+                    // TODO: essayer de trouver comment facilement transformer ca en une seule requete
+                    Topic recentlyUpdatedTopic = topicRepository
+                            .findFirstByCategoryOrderByLastActionDesc(category)
+                            .orElse(null);
+                    return categoryAdapter.toDtoWithMostRecentlyUpdatedTopic(category, recentlyUpdatedTopic);
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
     public List<CategoryDto> getRootCategories() {
         return categoryRepository.findByParentIdIsNull().stream()
                 .map(categoryAdapter::toDto)
@@ -48,15 +68,12 @@ public class CategoryService {
     }
 
     @Transactional
-    public CategoryDto getCategoryWithRecentlyUpdatedTopic(long id) {
+    public CategoryDto getCategoryWithLastUpdate(long id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format(CATEGORY_NOT_FOUND_MESSAGE, id)));
-
-        System.out.println("before");
         Topic recentlyUpdatedTopic = topicRepository
                 .findFirstByCategoryOrderByLastActionDesc(category)
                 .orElse(null);
-        System.out.println("after");
         return categoryAdapter.toDtoWithMostRecentlyUpdatedTopic(category, recentlyUpdatedTopic);
     }
 
