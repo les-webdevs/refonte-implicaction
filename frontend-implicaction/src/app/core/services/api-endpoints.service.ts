@@ -418,6 +418,10 @@ export class ApiEndpointsService {
     return ApiEndpointsService.createUrlWithPageable(Uris.FORUM.CATEGORIES_TOPICS(id), pageable);
   }
 
+  createCategory() {
+    return ApiEndpointsService.createUrl(Uris.FORUM.CATEGORIES);
+  }
+
   /**
    * FORUM TOPICS
    */

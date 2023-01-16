@@ -42,6 +42,10 @@ import {EditTopicButtonComponent} from './components/edit-topic-button/edit-topi
     EditTopicFormComponent,
     EditTopicButtonComponent,
   ],
+  exports: [
+    CategoryContentComponent,
+    SubCategoryListComponent
+  ],
   imports: [
     CommonModule,
     ForumRoutingModule,
