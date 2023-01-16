@@ -39,7 +39,7 @@ public class CategoryAdapter {
                 .title(model.getTitle())
                 .description(model.getDescription())
                 .parentId(model.getParent() != null ? model.getParent().getId() : null)
-                .children(model.getChildren().stream().map(Category::getId).collect(Collectors.toList()))
+                .children(model.getChildren() != null ? model.getChildren().stream().map(Category::getId).collect(Collectors.toList()) : null)
                 .build();
     }
 }
