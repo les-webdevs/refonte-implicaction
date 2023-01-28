@@ -6,7 +6,7 @@ import {Uris} from '../../shared/models/uris';
 import {Pageable} from '../../shared/models/pageable';
 import {JobCriteriaFilter} from '../../job/models/job-criteria-filter';
 import {Criteria} from '../../shared/models/Criteria';
-import {Response} from "../../forum/model/response";
+import {Response} from '../../forum/model/response';
 
 @Injectable({
   providedIn: 'root'
@@ -396,41 +396,45 @@ export class ApiEndpointsService {
 
   getCategories(): string;
   getCategories(ids: number[]): string;
-  getCategories(ids?: number[]) {
+  getCategories(ids?: number[]): string {
     if (ids) {
       return ApiEndpointsService.createUrlWithPathVariables(Uris.FORUM.CATEGORIES, [ids]);
     }
     return ApiEndpointsService.createUrl(Uris.FORUM.CATEGORIES);
   }
 
-  getRootCategories() {
+  getRootCategories(): string {
     return ApiEndpointsService.createUrlWithQueryParameters(Uris.FORUM.CATEGORIES, (queryParams) => {
-      queryParams.push("onlyRoot", true);
+      queryParams.push('onlyRoot', true);
       return queryParams;
     });
   }
 
-  getCategory(id: number) {
+  getCategory(id: number): string {
     return this.getCategories([id]);
   }
 
-  getCategoryTopics(id: number, pageable: Pageable<any>) {
+  getCategoryTopics(id: number, pageable: Pageable<any>): string {
     return ApiEndpointsService.createUrlWithPageable(Uris.FORUM.CATEGORIES_TOPICS(id), pageable);
   }
 
-  createCategory() {
+  createCategory(): string {
     return ApiEndpointsService.createUrl(Uris.FORUM.CATEGORIES);
+  }
+
+  deleteCategory(categoryId: number): string {
+    return ApiEndpointsService.createUrlWithPathVariables(Uris.FORUM.CATEGORIES, [categoryId]);
   }
 
   /**
    * FORUM TOPICS
    */
 
-  getTopic(id: number) {
+  getTopic(id: number): string {
     return ApiEndpointsService.createUrlWithPathVariables(Uris.FORUM.TOPICS, [id]);
   }
 
-  getTopicResponses(id: number, pageable: Pageable<Response>) {
+  getTopicResponses(id: number, pageable: Pageable<Response>): string {
     return ApiEndpointsService.createUrlWithPageable(Uris.FORUM.TOPICS_RESPONSES(id), pageable);
   }
 

@@ -3,7 +3,7 @@ import {Category} from '../../../../forum/model/category';
 import {CategoryService} from '../../../../forum/services/category.service';
 import {SidebarService} from '../../../../shared/services/sidebar.service';
 import {CreateCategoryFormComponent} from '../add-category-form/create-category-form.component';
-
+import {ToasterService} from '../../../../core/services/toaster.service';
 
 interface TableCategory {
   id: number;
@@ -11,7 +11,6 @@ interface TableCategory {
   description: string;
   parent: Category;
 }
-
 
 @Component({
   selector: 'app-category-row',
@@ -22,9 +21,9 @@ export class CategoryRowComponent implements OnInit {
 
   categories: TableCategory[];
 
-
   constructor(private categoryService: CategoryService,
-              private sidebarService: SidebarService) {
+              private sidebarService: SidebarService,
+              private toasterService: ToasterService) {
   }
 
   ngOnInit(): void {
@@ -42,31 +41,28 @@ export class CategoryRowComponent implements OnInit {
     });
   }
 
-
   categoriesToArray(categories: Category[]): [number, Category][] {
     return categories.map(value => [value.id, value] as [number, Category]);
   }
 
-
-  onClickEdit(category) {
-    console.log("edit");
+  onClickEdit(category): void {
+    console.log('edit');
     console.log(category);
   }
 
-  onClickDelete(category) {
-    console.log("delete");
-    console.log(category);
+  onClickDelete(category): void {
+    this.categoryService.deleteCategory(category.id).subscribe(() => {
+      this.toasterService.success('Categorie', 'Catégorie supprimée avec succès !');
+    }, error => {
+      this.toasterService.error('Erreur', error.error.errorMessage);
+    });
   }
 
-  onClickAdd() {
-
+  onClickAdd(): void {
     this.sidebarService.open({
       title: 'Creer une categorie',
       component: CreateCategoryFormComponent,
       width: 500
     });
-
-
   }
-
 }

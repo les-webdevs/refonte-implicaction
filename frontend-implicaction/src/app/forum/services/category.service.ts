@@ -1,17 +1,17 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {ApiEndpointsService} from "../../core/services/api-endpoints.service";
-import {Observable} from "rxjs";
-import {Category} from "../model/category";
-import {Pageable} from "../../shared/models/pageable";
-import {Topic} from "../model/topic";
-import {map} from "rxjs/operators";
+import {HttpClient} from '@angular/common/http';
+import {ApiEndpointsService} from '../../core/services/api-endpoints.service';
+import {Observable} from 'rxjs';
+import {Category} from '../model/category';
+import {Pageable} from '../../shared/models/pageable';
+import {Topic} from '../model/topic';
+import {map} from 'rxjs/operators';
 import {CategoryTreeSelectNode} from '../model/categoryTreeSelectNode';
 import {CategoryPayload} from '../model/categoryPayload';
 
 
 export interface ITree {
-  tree: CategoryTreeSelectNode[],
+  tree: CategoryTreeSelectNode[];
   map: Map<number, CategoryTreeSelectNode>;
 }
 
@@ -109,8 +109,12 @@ export class CategoryService {
     return this.http.get<Pageable<Topic>>(this.apiEndpointService.getCategoryTopics(id, pageable));
   }
 
-  createCategory(category: CategoryPayload) {
+  createCategory(category: CategoryPayload): Observable<Category> {
     return this.http.post<Category>(this.apiEndpointService.createCategory(), category);
+  }
+
+  deleteCategory(categoryId: number) {
+    return this.http.delete(this.apiEndpointService.deleteCategory(categoryId));
   }
 
 }
