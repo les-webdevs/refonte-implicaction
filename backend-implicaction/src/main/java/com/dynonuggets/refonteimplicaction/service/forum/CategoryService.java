@@ -3,10 +3,12 @@ package com.dynonuggets.refonteimplicaction.service.forum;
 import com.dynonuggets.refonteimplicaction.adapter.forum.CategoryAdapter;
 import com.dynonuggets.refonteimplicaction.dto.forum.CategoryDto;
 import com.dynonuggets.refonteimplicaction.dto.forum.CreateCategoryDto;
+import com.dynonuggets.refonteimplicaction.exception.ConflictException;
 import com.dynonuggets.refonteimplicaction.exception.ImplicactionException;
 import com.dynonuggets.refonteimplicaction.exception.NotFoundException;
 import com.dynonuggets.refonteimplicaction.model.forum.Category;
 import com.dynonuggets.refonteimplicaction.repository.forum.CategoryRepository;
+import com.dynonuggets.refonteimplicaction.repository.forum.TopicRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,7 @@ import static com.dynonuggets.refonteimplicaction.utils.Message.CATEGORY_NOT_FOU
 @AllArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
+    private final TopicRepository topicRepository;
     private final CategoryAdapter categoryAdapter;
 
     @Transactional
@@ -55,5 +58,23 @@ public class CategoryService {
 
         Category saved = categoryRepository.save(createdCategory);
         return categoryAdapter.toDto(saved);
+    }
+
+    public void deleteCategory(long categoryId) {
+        Category category = findById(categoryId);
+        boolean hasTopic = this.topicRepository.findByCategoryOrderByEditedAt(category).size() > 0;
+        boolean hasChildren = category.getChildren().size() > 0;
+
+        if (hasChildren) {
+            throw new ConflictException("Impossible de supprimer la catégorie. Il existe encore des catégories enfants");
+        } else if (hasTopic) {
+            throw new ConflictException("Impossible de supprimer la catégorie. Il existe encore des des topics");
+        } else {
+            categoryRepository.delete(category);
+        }
+    }
+
+    private Category findById(long categoryId) {
+        return categoryRepository.findById(categoryId).orElseThrow(() -> new NotFoundException(String.format(CATEGORY_NOT_FOUND_MESSAGE, categoryId)));
     }
 }

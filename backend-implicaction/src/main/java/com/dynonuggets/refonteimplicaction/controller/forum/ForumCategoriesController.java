@@ -1,5 +1,6 @@
 package com.dynonuggets.refonteimplicaction.controller.forum;
 
+import com.dynonuggets.refonteimplicaction.dto.ExceptionResponse;
 import com.dynonuggets.refonteimplicaction.dto.forum.CategoryDto;
 import com.dynonuggets.refonteimplicaction.dto.forum.CreateCategoryDto;
 import com.dynonuggets.refonteimplicaction.dto.forum.TopicDto;
@@ -61,4 +62,11 @@ public class ForumCategoriesController {
         Page<TopicDto> topicDtos = topicService.getTopicsFromCategory(categoryId, pageable);
         return ResponseEntity.ok(topicDtos);
     }
+
+    @DeleteMapping(value = DELETE_CATEGORY_URI)
+    public ResponseEntity<ExceptionResponse> delete(@PathVariable("categoryId") final long categoryId) {
+        categoryService.deleteCategory(categoryId);
+        return ResponseEntity.noContent().build();
+    }
+
 }
