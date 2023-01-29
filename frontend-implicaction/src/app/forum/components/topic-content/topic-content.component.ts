@@ -26,7 +26,7 @@ export class TopicContentComponent extends BaseWithPaginationAndFilterComponent<
   }
 
   ngOnInit(): void {
-    const $id = this.currentRoute.params.pipe(map(map => +map['id']))
+    const $id = this.currentRoute.params.pipe(map(map => +map['id']));
     this.topic$ = $id.pipe(switchMap(id => this.topicService.getTopic(id)));
     this.paginatedResponses$ = $id.pipe(switchMap(id => this.topicService.getTopicResponses(id, this.pageable)));
   }
