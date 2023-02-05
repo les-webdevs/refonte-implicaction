@@ -13,6 +13,8 @@ public interface TopicRepository extends JpaRepository<Topic, Long> {
     Page<Topic> findByCategory(Category category, Pageable pageable);
 
     Optional<Topic> findFirstByCategoryOrderByLastActionDesc(Category category);
-
+    
     Page<Topic> findByAuthor(User author, Pageable pageable);
+
+    Page<Topic> findAllByOrderByLastActionDesc(Pageable pageable);
 }

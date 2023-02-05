@@ -49,6 +49,10 @@ import {DeleteTopicButtonComponent} from './components/delete-topic-button/delet
     DeleteTopicValidationComponent,
     DeleteTopicButtonComponent,
   ],
+  exports: [
+    CategoryContentComponent,
+    SubCategoryListComponent
+  ],
   imports: [
     CommonModule,
     ForumRoutingModule,

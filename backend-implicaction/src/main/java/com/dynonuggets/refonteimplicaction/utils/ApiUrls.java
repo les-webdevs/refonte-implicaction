@@ -73,10 +73,13 @@ public class ApiUrls {
     public static final String CATEGORY_BASE_URI = "/api/forum/categories";
     public static final String GET_CATEGORY_URI = "/{categoryIds}";
 
+    public static final String DELETE_CATEGORY_URI = "/{categoryId}";
+
     public static final String GET_TOPIC_FROM_CATEGORY_URI = "/{categoryId}/topics";
 
     // FORUM TOPICS
     public static final String TOPIC_BASE_URI = "/api/forum/topics";
+    public static final String GET_LATEST_TOPICS = "/latest/{topicCount}";
     public static final String GET_TOPIC_URI = "/{topicId}";
     public static final String GET_RESPONSE_FROM_TOPIC_URI = "/{topicId}/responses";
 
