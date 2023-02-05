@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -55,6 +56,16 @@ public class AuthService {
     @Value("${app.url}")
     private String appUrl;
 
+    public void ensureCurrentUserAllowed(RoleEnum... roles) {
+        User currentUser = getCurrentUser();
+
+        List<String> requiredRoles = Arrays.asList(roles).stream().map(RoleEnum::getLongName).collect(toList());
+
+        boolean isAllowed = currentUser.getRoles().stream().anyMatch(role -> requiredRoles.contains(role));
+        if (!isAllowed) {
+            throw new UnauthorizedException("Vous n'avez pas le droit de faire ça");
+        }
+    }
 
     /**
      * Enregistre un utilisateur en base de données et lui envoie un mail d'activation
