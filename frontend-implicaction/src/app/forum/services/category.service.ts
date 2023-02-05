@@ -117,4 +117,8 @@ export class CategoryService {
     return this.http.delete(this.apiEndpointService.deleteCategory(categoryId));
   }
 
+  editCategory(category: CategoryPayload): Observable<Category> {
+    return this.http.put<Category>(this.apiEndpointService.editCategory(), category);
+  }
+
 }

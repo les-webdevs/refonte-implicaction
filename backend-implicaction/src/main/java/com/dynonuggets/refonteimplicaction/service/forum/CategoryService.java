@@ -3,6 +3,7 @@ package com.dynonuggets.refonteimplicaction.service.forum;
 import com.dynonuggets.refonteimplicaction.adapter.forum.CategoryAdapter;
 import com.dynonuggets.refonteimplicaction.dto.forum.CategoryDto;
 import com.dynonuggets.refonteimplicaction.dto.forum.CreateCategoryDto;
+import com.dynonuggets.refonteimplicaction.dto.forum.EditCategoryDto;
 import com.dynonuggets.refonteimplicaction.exception.ConflictException;
 import com.dynonuggets.refonteimplicaction.exception.ImplicactionException;
 import com.dynonuggets.refonteimplicaction.exception.NotFoundException;
@@ -68,7 +69,7 @@ public class CategoryService {
         if (hasChildren) {
             throw new ConflictException("Impossible de supprimer la catégorie. Il existe encore des catégories enfants");
         } else if (hasTopic) {
-            throw new ConflictException("Impossible de supprimer la catégorie. Il existe encore des des topics");
+            throw new ConflictException("Impossible de supprimer la catégorie. Il existe encore des topics");
         } else {
             categoryRepository.delete(category);
         }
@@ -77,4 +78,34 @@ public class CategoryService {
     private Category findById(long categoryId) {
         return categoryRepository.findById(categoryId).orElseThrow(() -> new NotFoundException(String.format(CATEGORY_NOT_FOUND_MESSAGE, categoryId)));
     }
+
+
+    public CategoryDto editCategory(EditCategoryDto editCategoryDto) {
+
+        Category newParentCategory = null;
+        if (editCategoryDto.getParentId() != null) {
+            newParentCategory = this.findById(editCategoryDto.getParentId());
+        }
+
+        Category category = this.findById(editCategoryDto.getId());
+        if (newParentCategory != null) {
+            Category parentCategory = newParentCategory;
+
+            while (parentCategory != null && editCategoryDto.getId() != parentCategory.getId()) {
+                parentCategory = parentCategory.getParent();
+            }
+
+            if (parentCategory != null) {
+                throw new ConflictException("Le parent d'un catégorie ne peut etre lui même ou l'un de ses enfants");
+            }
+        }
+
+        category.setTitle(editCategoryDto.getTitle());
+        category.setDescription(editCategoryDto.getDescription());
+        category.setParent(newParentCategory);
+        category.setChildren(category.getChildren());
+        Category editedCategory = categoryRepository.save(category);
+        return categoryAdapter.toDto(editedCategory);
+    }
+
 }

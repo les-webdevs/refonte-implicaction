@@ -36,7 +36,7 @@ export class CreateCategoryFormComponent extends SidebarContentComponent<never> 
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
 
     const createCategory: CategoryPayload = {
       title: this.categoryForm.value.title,

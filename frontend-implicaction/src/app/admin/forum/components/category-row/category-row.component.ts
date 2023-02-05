@@ -4,6 +4,8 @@ import {CategoryService} from '../../../../forum/services/category.service';
 import {SidebarService} from '../../../../shared/services/sidebar.service';
 import {CreateCategoryFormComponent} from '../add-category-form/create-category-form.component';
 import {ToasterService} from '../../../../core/services/toaster.service';
+import {EditCategoryFormComponent} from '../edit-category-form/edit-category-form.component';
+import {CategoryWithParent} from '../../../../forum/model/categoryWithParent';
 
 interface TableCategory {
   id: number;
@@ -45,9 +47,19 @@ export class CategoryRowComponent implements OnInit {
     return categories.map(value => [value.id, value] as [number, Category]);
   }
 
-  onClickEdit(category): void {
-    console.log('edit');
-    console.log(category);
+  onClickEdit(category: CategoryWithParent): void {
+    this.sidebarService.open({
+      title: 'Editer une catégorie',
+      component: EditCategoryFormComponent,
+      width: 500,
+      input: {
+        category: {
+          ...category,
+          parentId: category.parent?.id,
+          children: []
+        }
+      }
+    });
   }
 
   onClickDelete(category): void {

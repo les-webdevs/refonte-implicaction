@@ -426,6 +426,10 @@ export class ApiEndpointsService {
     return ApiEndpointsService.createUrlWithPathVariables(Uris.FORUM.CATEGORIES, [categoryId]);
   }
 
+  editCategory(): string {
+    return ApiEndpointsService.createUrl(Uris.FORUM.CATEGORIES);
+  }
+
   /**
    * FORUM TOPICS
    */

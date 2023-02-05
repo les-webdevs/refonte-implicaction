@@ -10,13 +10,15 @@ import {CreateCategoryFormComponent} from './components/add-category-form/create
 import {EditorModule} from 'primeng/editor';
 import {TreeSelectModule} from 'primeng/treeselect';
 import {ReactiveFormsModule} from '@angular/forms';
+import { EditCategoryFormComponent } from './components/edit-category-form/edit-category-form.component';
 
 
 @NgModule({
   declarations: [
     ForumComponent,
     CategoryRowComponent,
-    CreateCategoryFormComponent
+    CreateCategoryFormComponent,
+    EditCategoryFormComponent
   ],
   imports: [
     ForumRoutingModule,

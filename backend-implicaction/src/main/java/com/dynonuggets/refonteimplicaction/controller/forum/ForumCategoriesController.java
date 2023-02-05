@@ -3,6 +3,7 @@ package com.dynonuggets.refonteimplicaction.controller.forum;
 import com.dynonuggets.refonteimplicaction.dto.ExceptionResponse;
 import com.dynonuggets.refonteimplicaction.dto.forum.CategoryDto;
 import com.dynonuggets.refonteimplicaction.dto.forum.CreateCategoryDto;
+import com.dynonuggets.refonteimplicaction.dto.forum.EditCategoryDto;
 import com.dynonuggets.refonteimplicaction.dto.forum.TopicDto;
 import com.dynonuggets.refonteimplicaction.exception.ImplicactionException;
 import com.dynonuggets.refonteimplicaction.service.forum.CategoryService;
@@ -69,4 +70,11 @@ public class ForumCategoriesController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping()
+    public ResponseEntity<CategoryDto> edit(@RequestBody EditCategoryDto categoryDto) {
+
+        CategoryDto editDto = categoryService.editCategory(categoryDto);
+        return ResponseEntity.status(CREATED).body(editDto);
+
+    }
 }
