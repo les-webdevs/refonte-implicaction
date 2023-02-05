@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {SidebarService} from "../../../shared/services/sidebar.service";
 import {DeleteTopicValidationComponent} from "../delete-topic-validation/delete-topic-validation.component";
 
@@ -7,16 +7,12 @@ import {DeleteTopicValidationComponent} from "../delete-topic-validation/delete-
   templateUrl: './delete-topic-button.component.html',
   styleUrls: ['./delete-topic-button.component.scss']
 })
-export class DeleteTopicButtonComponent implements OnInit {
+export class DeleteTopicButtonComponent {
 
   Image: string = "";
   @Input() topicId?: number;
 
   constructor(private sidebarService: SidebarService) {
-  }
-
-
-  ngOnInit(): void {
   }
 
   onClick() {
