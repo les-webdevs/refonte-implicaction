@@ -33,4 +33,9 @@ export class TopicService {
   editTopic(topic: TopicPayload): Observable<Topic> {
     return this.http.patch<Topic>(this.apiEndpointsService.editTopic(), topic);
   }
+
+  deleteTopic(topicId: number): Observable<Object> {
+    console.log("ça passe");
+    return this.http.delete(this.apiEndpointsService.deleteTopic(topicId));
+  }
 }
