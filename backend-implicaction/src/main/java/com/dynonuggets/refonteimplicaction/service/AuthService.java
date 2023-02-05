@@ -56,17 +56,6 @@ public class AuthService {
     @Value("${app.url}")
     private String appUrl;
 
-    public void ensureCurrentUserAllowed(RoleEnum... roles) {
-        User currentUser = getCurrentUser();
-
-        List<String> requiredRoles = Arrays.asList(roles).stream().map(RoleEnum::getLongName).collect(toList());
-
-        boolean isAllowed = currentUser.getRoles().stream().anyMatch(role -> requiredRoles.contains(role));
-        if (!isAllowed) {
-            throw new UnauthorizedException("Vous n'avez pas le droit de faire ça");
-        }
-    }
-
     /**
      * Enregistre un utilisateur en base de données et lui envoie un mail d'activation
      * crée également une entrée dans la table wp_signups
@@ -224,5 +213,18 @@ public class AuthService {
     public boolean isLoggedIn() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
+    }
+
+    @Transactional(readOnly = true)
+    public void ensureCurrentUserAllowed(RoleEnum... roles) {
+        User currentUser = getCurrentUser();
+
+        List<String> requiredRoles = Arrays.stream(roles).map(RoleEnum::getLongName).collect(toList());
+
+        boolean isAllowed = currentUser.getRoles().stream()
+                .anyMatch(role -> requiredRoles.contains(role.getName()));
+        if (!isAllowed) {
+            throw new UnauthorizedException("Vous n'avez pas le droit de faire ça");
+        }
     }
 }
