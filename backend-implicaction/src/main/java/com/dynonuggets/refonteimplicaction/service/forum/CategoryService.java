@@ -94,16 +94,15 @@ public class CategoryService {
 
     public void deleteCategory(long categoryId) {
         Category category = findById(categoryId);
-        boolean hasTopic = this.topicRepository.findByCategoryOrderByEditedAt(category).size() > 0;
+        boolean hasTopic = this.topicRepository.findFirstByCategoryOrderByLastActionDesc(category).isPresent();
         boolean hasChildren = category.getChildren().size() > 0;
 
         if (hasChildren) {
             throw new ConflictException("Impossible de supprimer la catégorie. Il existe encore des catégories enfants");
         } else if (hasTopic) {
             throw new ConflictException("Impossible de supprimer la catégorie. Il existe encore des topics");
-        } else {
-            categoryRepository.delete(category);
         }
+        categoryRepository.delete(category);
     }
 
     private Category findById(long categoryId) {
