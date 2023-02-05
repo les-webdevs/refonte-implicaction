@@ -444,6 +444,10 @@ export class ApiEndpointsService {
     return ApiEndpointsService.createUrlWithPathVariables(Uris.FORUM.TOPICS, [id]);
   }
 
+  getLatestTopics(topicCount: number) {
+    return ApiEndpointsService.createUrlWithPathVariables(Uris.FORUM.LATEST_TOPICS, [topicCount]);
+  }
+
   getTopicResponses(id: number, pageable: Pageable<Response>) {
     return ApiEndpointsService.createUrlWithPageable(Uris.FORUM.TOPICS_RESPONSES(id), pageable);
   }
