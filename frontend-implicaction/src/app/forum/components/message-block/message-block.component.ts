@@ -11,9 +11,8 @@ import {Univers} from '../../../shared/enums/univers';
 export class MessageBlockComponent {
 
   univers = Univers;
-
-  DATE_FORMAT = 'dd MMMM yyyy';
-  DATETIME_FORMAT = this.DATE_FORMAT + ' HH:mm';
+  
+  DATETIME_FORMAT = 'dd MMMM yyyy HH:mm';
 
   @Input()
   message: Topic | Response;
